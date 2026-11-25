@@ -58,27 +58,10 @@ function Reveal({
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [time, setTime] = useState("");
   const [portraitFailed, setPortraitFailed] = useState(false);
   const [officeFailed, setOfficeFailed] = useState(false);
   const [techFailed, setTechFailed] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-
-  useEffect(() => {
-    const updateTime = () => {
-      setTime(
-        new Intl.DateTimeFormat("en", {
-          timeZone: "Asia/Colombo",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false
-        }).format(new Date())
-      );
-    };
-    updateTime();
-    const interval = window.setInterval(updateTime, 30000);
-    return () => window.clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -96,10 +79,9 @@ export default function Portfolio() {
 
   return (
     <main>
-      {/* Atmosphere Gradients and Grid */}
+      {/* Background Atmosphere */}
       <div className="cyber-grid" aria-hidden="true" />
       <div className="ambient-glow-1" aria-hidden="true" />
-      <div className="ambient-glow-2" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
 
       {/* Floating Pill Navigation */}
@@ -118,7 +100,7 @@ export default function Portfolio() {
           </div>
 
           <a href="#contact" className="nav-cta">
-            Let&apos;s Talk <ArrowUpRight size={14} />
+            Contact
           </a>
 
           <button
@@ -147,107 +129,95 @@ export default function Portfolio() {
             </a>
           ))}
           <a href="#contact" onClick={() => setMenuOpen(false)}>
-            <span>Let&apos;s Talk</span>
+            <span>Contact</span>
             <ArrowUpRight size={15} />
           </a>
         </motion.div>
       )}
 
-      {/* Hero Section */}
-      <section className="section-shell hero-section" id="top">
-        <div className="hero-content">
-          <Reveal>
-            <div className="status-badge">
-              <span className="pulse-dot" />
-              <span>AVAILABLE FOR NEW PROJECTS · SRI LANKA</span>
-            </div>
-          </Reveal>
+      {/* =========================================
+          MASTER CINEMATIC HERO SECTION
+          ========================================= */}
+      <section className="hero-stage" id="top">
+        {/* Star Particles & Ambient Glow */}
+        <div className="hero-particles" aria-hidden="true" />
+        <div className="hero-radial-glow" aria-hidden="true" />
 
-          <Reveal delay={0.08}>
-            <h1 className="hero-title">
-              Hi, I&apos;m <span className="gradient-text">Charitha</span>.
-              <br />
-              Building what&apos;s next.
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.15}>
-            <p className="hero-subtitle">
-              An independent <strong>full-stack developer and AI builder</strong> creating
-              high-performance digital products, intelligent autonomous agents, and refined software
-              architectures.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.22}>
-            <div className="hero-actions">
-              <a href="#projects" className="btn-primary">
-                Explore Selected Work <ArrowDown size={15} />
-              </a>
-              <a
-                href="https://github.com/charitha-only"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-secondary"
-              >
-                <Github size={16} /> GitHub Profile
-              </a>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <div className="hero-meta-bar">
-              <div className="meta-item">
-                <span className="meta-kicker">LOCATION</span>
-                <span className="meta-val">Sri Lanka (UTC +5:30)</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-kicker">LOCAL TIME</span>
-                <span className="meta-val">{time || "—"} Colombo</span>
-              </div>
-              <div className="meta-item">
-                <span className="meta-kicker">CORE FOCUS</span>
-                <span className="meta-val">AI Systems &amp; Modern Web</span>
-              </div>
-            </div>
-          </Reveal>
+        {/* Giant Glowing Typography Behind Subject */}
+        <div className="hero-backdrop-text-wrap" aria-hidden="true">
+          <h1 className="hero-giant-word">PORTFOLIO</h1>
+          <div className="hero-tech-banner">
+            <span>Tech Stack: Next.js, React, TypeScript, Rust, Tailwind CSS, AI Agents</span>
+          </div>
         </div>
 
-        {/* Hero Portrait Showcase */}
-        <Reveal delay={0.18} className="hero-portrait-card">
-          <div className="portrait-glow-back" aria-hidden="true" />
-          <div className="portrait-neon-frame">
-            <span className="corner-bracket bracket-tl" />
-            <span className="corner-bracket bracket-tr" />
-            <span className="corner-bracket bracket-bl" />
-            <span className="corner-bracket bracket-br" />
+        {/* Master Center Subject Portrait */}
+        <div className="hero-subject-container">
+          {!portraitFailed ? (
+            <img
+              src="/images/portfolio-portrait-hero-hd.webp"
+              alt="Charitha — Web & AI Developer"
+              className="hero-subject-image"
+              width={1200}
+              height={900}
+              fetchPriority="high"
+              onError={() => setPortraitFailed(true)}
+            />
+          ) : (
+            <img
+              src="/images/portfolio-portrait-dark-hero.webp"
+              alt="Charitha — Developer"
+              className="hero-subject-image"
+              width={728}
+              height={540}
+            />
+          )}
+        </div>
 
-            <div className="portrait-inner">
-              {!portraitFailed ? (
-                <img
-                  src="/images/portfolio-portrait-dark-hero.webp"
-                  alt="Charitha — Developer and AI Builder"
-                  width={728}
-                  height={540}
-                  fetchPriority="high"
-                  onError={() => setPortraitFailed(true)}
-                />
-              ) : (
-                <div className="gallery-fallback">
-                  <span className="fallback-tag">01 / CREATOR PROFILE</span>
-                  <span className="fallback-title">CHARITHA · DEVELOPER</span>
-                </div>
-              )}
-            </div>
+        {/* Bottom Left Corner Content */}
+        <motion.div
+          className="hero-corner-left"
+          initial={{ opacity: 0, x: -24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <span className="corner-tag">I AM</span>
+          <h2 className="corner-heading">
+            WEB &amp; AI<br />DEVELOPER
+          </h2>
+          <p className="corner-desc">
+            I design and develop modern, high-performance web applications with a focus on
+            exceptional user experiences and intelligent agent systems.
+          </p>
+          <a href="#projects" className="corner-cta-pill">
+            Explore Work <ArrowDown size={13} />
+          </a>
+        </motion.div>
 
-            <div className="portrait-badge-floating">
-              <span className="badge-role">
-                <span className="badge-code">&lt;/&gt;</span> Full-Stack &amp; AI Builder
-              </span>
-              <span className="badge-tag">2026 — NOW</span>
-            </div>
+        {/* Bottom Right Corner Content */}
+        <motion.div
+          className="hero-corner-right"
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <div className="corner-slogan">
+            <span>DESIGN THAT INSPIRES.</span>
+            <span className="slogan-gold">CODE THAT PERFORMS.</span>
           </div>
-        </Reveal>
+          <div className="corner-origin">
+            <span>Based in Sri Lanka</span>
+            <span className="origin-name">/ Charitha</span>
+          </div>
+        </motion.div>
+
+        {/* Golden Light Ray Swoosh */}
+        <div className="hero-bottom-swoosh" aria-hidden="true" />
+
+        {/* Floating Corner Chat Pill */}
+        <a href="#contact" className="hero-floating-chat" aria-label="Get in touch">
+          <Sparkles size={18} />
+        </a>
       </section>
 
       {/* Infinite Focus Ticker */}
@@ -517,18 +487,20 @@ export default function Portfolio() {
               <div className="portrait-showcase-item">
                 {!officeFailed ? (
                   <img
-                    src="/images/portfolio-portrait-office.webp"
+                    src="/images/portfolio-portrait-office-hd.webp"
                     alt="Charitha in workspace environment"
-                    width={728}
-                    height={540}
+                    width={1000}
+                    height={750}
                     loading="lazy"
                     onError={() => setOfficeFailed(true)}
                   />
                 ) : (
-                  <div className="gallery-fallback">
-                    <span className="fallback-tag">01 / WORKSPACE</span>
-                    <span className="fallback-title">THE BUILDER</span>
-                  </div>
+                  <img
+                    src="/images/portfolio-portrait-office.webp"
+                    alt="Charitha in workspace environment"
+                    width={728}
+                    height={540}
+                  />
                 )}
                 <div className="portrait-card-caption">
                   <span>01 — WORKSPACE PROFILE</span>
@@ -547,9 +519,9 @@ export default function Portfolio() {
                     onError={() => setTechFailed(true)}
                   />
                 ) : (
-                  <div className="gallery-fallback">
-                    <span className="fallback-tag">02 / TECH PROFILE</span>
-                    <span className="fallback-title">THE THINKER</span>
+                  <div className="portrait-card-caption">
+                    <span>02 — COGNITIVE PROFILE</span>
+                    <span className="portrait-caption-tag">THE THINKER</span>
                   </div>
                 )}
                 <div className="portrait-card-caption">
