@@ -17,9 +17,9 @@ npm run dev
 ## Add your portrait
 Create `public/images/` and add these three supplied portraits (keep the original face and skin tone unchanged):
 
-- `portfolio-portrait-dark-hero.jpg` — hero portrait
-- `portfolio-portrait-office.jpg` — About gallery, workspace portrait
-- `portfolio-portrait-tech.jpg` — About gallery, technology portrait
+- `portfolio-portrait-dark-hero.webp` — hero portrait
+- `portfolio-portrait-office.webp` — About gallery, workspace portrait
+- `portfolio-portrait-tech.webp` — About gallery, technology portrait
 
 Use optimized WebP exports if possible. The site falls back gracefully if the hero image is missing; gallery images should be added before production deployment.
 
