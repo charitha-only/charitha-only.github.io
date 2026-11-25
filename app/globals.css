@@ -289,7 +289,7 @@ button:focus-visible {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(680px, 72vw);
+  width: min(640px, 68vw);
   z-index: 2;
   pointer-events: none;
   display: flex;
@@ -303,9 +303,9 @@ button:focus-visible {
   object-fit: contain;
   object-position: bottom center;
   display: block;
-  -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
-  filter: contrast(1.04) brightness(1.02);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  filter: contrast(1.05) brightness(1.02);
 }
 
 /* Bottom Left Corner Box */
