@@ -46,6 +46,8 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [time, setTime] = useState("");
   const [portraitFailed, setPortraitFailed] = useState(false);
+  const [officeFailed, setOfficeFailed] = useState(false);
+  const [techFailed, setTechFailed] = useState(false);
 
   useEffect(() => {
     const update = () => setTime(new Intl.DateTimeFormat("en", {
@@ -54,6 +56,14 @@ export default function Portfolio() {
     update();
     const timer = window.setInterval(update, 30000);
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
@@ -65,14 +75,34 @@ export default function Portfolio() {
           {nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
         </nav>
         <a className="header-cta" href="#contact">Let&apos;s talk <ArrowUpRight size={14} /></a>
-        <button className="menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <X /> : <Menu />}
+        <button
+          className="menu-toggle"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </header>
 
       {menuOpen && (
-        <motion.nav className="mobile-menu" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
-          {nav.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowUpRight size={16}/></a>)}
+        <motion.nav
+          id="mobile-nav"
+          className="mobile-menu"
+          aria-label="Mobile navigation"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          {nav.map(([label, href]) => (
+            <a key={label} href={href} onClick={() => setMenuOpen(false)}>
+              {label}
+              <ArrowUpRight size={16}/>
+            </a>
+          ))}
+          <a className="mobile-cta" href="#contact" onClick={() => setMenuOpen(false)}>
+            Let&apos;s talk <ArrowUpRight size={16}/>
+          </a>
         </motion.nav>
       )}
 
@@ -104,7 +134,14 @@ export default function Portfolio() {
           <div className="hero-visual">
             <div className="portrait-frame">
               {!portraitFailed ? (
-                <img src="/images/portfolio-portrait-dark-hero.webp" alt="Charitha, developer and AI builder" fetchPriority="high" onError={() => setPortraitFailed(true)} />
+                <img
+                  src="/images/portfolio-portrait-dark-hero.webp"
+                  alt="Charitha, developer and AI builder"
+                  width={728}
+                  height={540}
+                  fetchPriority="high"
+                  onError={() => setPortraitFailed(true)}
+                />
               ) : (
                 <div className="portrait-fallback">
                   <span className="fallback-initials">C.</span>
@@ -143,7 +180,46 @@ export default function Portfolio() {
             </div>
           </Reveal>
         </div>
-        <Reveal><div className="portrait-gallery" aria-label="Portrait photography"><figure><img src="/images/portfolio-portrait-office.webp" alt="Charitha in a modern workspace" loading="lazy" /><figcaption>01 — THE BUILDER</figcaption></figure><figure><img src="/images/portfolio-portrait-tech.webp" alt="Charitha in a cinematic technology portrait" loading="lazy" /><figcaption>02 — THE THINKER</figcaption></figure></div></Reveal>
+        <Reveal>
+          <div className="portrait-gallery" aria-label="Portrait photography">
+            <figure>
+              {!officeFailed ? (
+                <img
+                  src="/images/portfolio-portrait-office.webp"
+                  alt="Charitha in a modern workspace"
+                  width={728}
+                  height={540}
+                  loading="lazy"
+                  onError={() => setOfficeFailed(true)}
+                />
+              ) : (
+                <div className="gallery-fallback">
+                  <span className="fallback-tag">01 / WORKSPACE</span>
+                  <span className="fallback-title">THE BUILDER</span>
+                </div>
+              )}
+              <figcaption>01 — THE BUILDER</figcaption>
+            </figure>
+            <figure>
+              {!techFailed ? (
+                <img
+                  src="/images/portfolio-portrait-tech.webp"
+                  alt="Charitha in a cinematic technology portrait"
+                  width={728}
+                  height={540}
+                  loading="lazy"
+                  onError={() => setTechFailed(true)}
+                />
+              ) : (
+                <div className="gallery-fallback">
+                  <span className="fallback-tag">02 / TECHNOLOGY</span>
+                  <span className="fallback-title">THE THINKER</span>
+                </div>
+              )}
+              <figcaption>02 — THE THINKER</figcaption>
+            </figure>
+          </div>
+        </Reveal>
         <Reveal><div className="principle-strip"><span>MY APPROACH</span><p>Think deeply. Build with AI. Test carefully. Keep improving.</p><Sparkles size={18}/></div></Reveal>
       </section>
 
