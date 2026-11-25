@@ -151,15 +151,15 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Master Center Subject Portrait */}
+        {/* Master Center Subject Portrait (Transparent Cutout) */}
         <div className="hero-subject-container">
           {!portraitFailed ? (
             <img
-              src="/images/portfolio-portrait-hero-hd.webp"
+              src="/images/portfolio-portrait-hero-transparent.png"
               alt="Charitha — Web & AI Developer"
               className="hero-subject-image"
-              width={1200}
-              height={900}
+              width={1448}
+              height={1086}
               fetchPriority="high"
               onError={() => setPortraitFailed(true)}
             />
