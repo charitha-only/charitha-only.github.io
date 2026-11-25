@@ -78,12 +78,12 @@ export default function Portfolio() {
 
       <section className="hero section-shell" id="top">
         <div className="hero-copy">
-          <Reveal><div className="eyebrow"><span className="status-dot" /> AVAILABLE FOR SELECT PROJECTS <span className="eyebrow-line" /></div></Reveal>
+          <Reveal><div className="eyebrow"><span className="status-dot" /> INDEPENDENT DEVELOPER · SRI LANKA <span className="eyebrow-line" /></div></Reveal>
           <Reveal delay={0.08}>
-            <h1>Building the<br /><span className="muted-word">future</span> with <span className="outline-word">AI.</span></h1>
+            <h1>Designing<br /><span className="muted-word">what’s</span> next<span className="outline-word">.</span></h1>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="hero-description">I&apos;m Charitha — a <strong>Full AI Vibe Coder</strong> turning ambitious ideas into useful digital products, intelligent agents and automation systems.</p>
+            <p className="hero-description">I&apos;m Charitha — a <strong>developer and AI builder</strong> creating thoughtful digital products, intelligent tools and automation systems.</p>
           </Reveal>
           <Reveal delay={0.24}>
             <div className="hero-actions">
@@ -104,7 +104,7 @@ export default function Portfolio() {
           <div className="hero-visual">
             <div className="portrait-frame">
               {!portraitFailed ? (
-                <img src="/images/charitha-hero.webp" alt="Portrait of Charitha" onError={() => setPortraitFailed(true)} />
+                <img src="/images/portfolio-portrait-dark-hero.jpg" alt="Charitha, developer and AI builder" fetchPriority="high" onError={() => setPortraitFailed(true)} />
               ) : (
                 <div className="portrait-fallback">
                   <span className="fallback-initials">C.</span>
@@ -114,7 +114,7 @@ export default function Portfolio() {
               <div className="portrait-vignette" />
               <div className="portrait-index">01 / CREATOR PROFILE</div>
             </div>
-            <div className="visual-stamp"><span>AI</span><small>BUILT DIFFERENT<br/>BY DESIGN</small></div>
+            <div className="visual-stamp"><span>AI</span><small>IDEAS INTO<br/>REALITY</small></div>
             <div className="visual-caption"><span>INDEPENDENT BUILDER</span><span>2026 — NOW</span></div>
           </div>
         </Reveal>
@@ -133,7 +133,7 @@ export default function Portfolio() {
       <section className="content-section section-shell about-section" id="about">
         <Reveal><div className="section-kicker">01 / THE PERSON BEHIND THE BUILDS</div></Reveal>
         <div className="about-grid">
-          <Reveal><h2>Curiosity first.<br/><span className="muted-word">Creation always.</span></h2></Reveal>
+          <Reveal><h2>Curiosity first.<br/><span className="muted-word">Build with intent.</span></h2></Reveal>
           <Reveal delay={0.1}>
             <div className="about-copy">
               <p className="large-copy">I&apos;m an independent developer exploring what becomes possible when human ideas meet modern AI tools.</p>
@@ -143,6 +143,7 @@ export default function Portfolio() {
             </div>
           </Reveal>
         </div>
+        <Reveal><div className="portrait-gallery" aria-label="Portrait photography"><figure><img src="/images/portfolio-portrait-office.jpg" alt="Charitha in a modern workspace" loading="lazy" /><figcaption>01 — THE BUILDER</figcaption></figure><figure><img src="/images/portfolio-portrait-tech.jpg" alt="Charitha in a cinematic technology portrait" loading="lazy" /><figcaption>02 — THE THINKER</figcaption></figure></div></Reveal>
         <Reveal><div className="principle-strip"><span>MY APPROACH</span><p>Think deeply. Build with AI. Test carefully. Keep improving.</p><Sparkles size={18}/></div></Reveal>
       </section>
 
@@ -210,7 +211,7 @@ export default function Portfolio() {
         <div className="section-shell contact-inner">
           <Reveal><div className="section-kicker">05 / HAVE AN IDEA?</div></Reveal>
           <Reveal><h2>Let&apos;s make<br/>it <span className="outline-word">happen.</span></h2></Reveal>
-          <Reveal><p>I&apos;m always interested in thoughtful ideas, creative collaborations and interesting problems to solve.</p></Reveal>
+          <Reveal><p>Have a meaningful idea, an interesting challenge or a project in mind? Let’s build something useful.</p></Reveal>
           <Reveal><div className="contact-actions">
             <a className="button button-light" href="https://github.com/charitha-only" target="_blank" rel="noreferrer">Connect on GitHub <Github size={17}/></a>
             <a className="text-link" href="https://github.com/charitha-only?tab=repositories" target="_blank" rel="noreferrer">Explore my work <ArrowUpRight size={15}/></a>
@@ -221,7 +222,7 @@ export default function Portfolio() {
 
       <footer className="footer section-shell">
         <a className="brand footer-brand" href="#top">C<span>.</span></a>
-        <span>Designed & built with curiosity, code and AI.</span>
+        <span>Designed with intention · Built with curiosity.</span>
         <div><a href="https://github.com/charitha-only" target="_blank" rel="noreferrer">GITHUB <ArrowUpRight size={12}/></a><span>© {new Date().getFullYear()} CHARITHA</span></div>
       </footer>
     </main>
