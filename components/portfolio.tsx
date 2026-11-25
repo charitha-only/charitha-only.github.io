@@ -3,39 +3,53 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  ArrowDown, ArrowDownRight, ArrowUpRight, Bot, Braces, Check,
-  Code2, Cpu, Github, Layers3, Menu, MousePointer2, Workflow, X,
-  Sparkles, Zap, Globe2, Terminal, WandSparkles
+  ArrowDown, ArrowUpRight, Bot, Check, Code2, Copy, Cpu,
+  ExternalLink, Github, Layers3, Menu, Sparkles, Terminal,
+  Workflow, X, Zap
 } from "lucide-react";
 import { projects } from "@/data/projects";
 
 const tools = [
-  { name: "OpenAI Codex", type: "AI coding agent", icon: "✳" },
-  { name: "Google Antigravity", type: "AI development environment", icon: "◈" },
-  { name: "Grok", type: "AI assistant", icon: "𝕏" },
-  { name: "OpenBot", type: "AI tooling & workflows", icon: "⌘" }
+  { name: "OpenAI Codex", type: "AI coding agent & synthesis", symbol: "✳", status: "Active" },
+  { name: "Google Antigravity", type: "AI development environment", symbol: "◈", status: "Core Stack" },
+  { name: "Grok", type: "Real-time reasoning & research", symbol: "𝕏", status: "Integrated" },
+  { name: "OpenBot", type: "Autonomous agent workflows", symbol: "⌘", status: "Active" }
 ];
 
-const capabilities = [
-  { icon: Bot, title: "AI agent creation", text: "Designing useful agents, structured instructions and multi-step AI workflows." },
-  { icon: Workflow, title: "Automation systems", text: "Connecting tools and repeatable processes to reduce manual work." },
-  { icon: Code2, title: "Full-stack development", text: "Building responsive interfaces and application logic from idea to deployment." },
-  { icon: Layers3, title: "Product engineering", text: "Turning rough concepts into usable desktop, web and mobile experiences." }
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Capabilities", href: "#capabilities" },
+  { label: "Projects", href: "#projects" },
+  { label: "Toolkit", href: "#toolkit" },
+  { label: "Contact", href: "#contact" }
 ];
 
-const nav = [
-  ["About", "#about"], ["Capabilities", "#capabilities"], ["Work", "#work"], ["Toolkit", "#toolkit"], ["Contact", "#contact"]
+const skills = [
+  "AI-Assisted Engineering", "Agentic Workflows", "Next.js 15", "React 19",
+  "TypeScript", "Rust Systems", "Flutter & Dart", "Automation Pipelines",
+  "Prompt Architecture", "Tailwind CSS", "Local-First Architecture", "Vercel Deployments"
 ];
 
-function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+  style
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const reduce = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 26 }}
+      style={style}
+      initial={reduce ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
-      transition={{ duration: reduce ? 0 : 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.14 }}
+      transition={{ duration: reduce ? 0 : 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -48,14 +62,22 @@ export default function Portfolio() {
   const [portraitFailed, setPortraitFailed] = useState(false);
   const [officeFailed, setOfficeFailed] = useState(false);
   const [techFailed, setTechFailed] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
-    const update = () => setTime(new Intl.DateTimeFormat("en", {
-      timeZone: "Asia/Colombo", hour: "2-digit", minute: "2-digit", hour12: false
-    }).format(new Date()));
-    update();
-    const timer = window.setInterval(update, 30000);
-    return () => window.clearInterval(timer);
+    const updateTime = () => {
+      setTime(
+        new Intl.DateTimeFormat("en", {
+          timeZone: "Asia/Colombo",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        }).format(new Date())
+      );
+    };
+    updateTime();
+    const interval = window.setInterval(updateTime, 30000);
+    return () => window.clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -66,240 +88,593 @@ export default function Portfolio() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("contact@malsanka.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2400);
+  };
+
   return (
     <main>
+      {/* Atmosphere Gradients and Grid */}
+      <div className="cyber-grid" aria-hidden="true" />
+      <div className="ambient-glow-1" aria-hidden="true" />
+      <div className="ambient-glow-2" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Charitha home">C<span>.</span></a>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          {nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+
+      {/* Floating Pill Navigation */}
+      <header className="header-wrapper">
+        <nav className="floating-nav" aria-label="Main navigation">
+          <a href="#top" className="nav-brand" aria-label="Charitha Portfolio">
+            C<span>.</span>
+          </a>
+
+          <div className="nav-links">
+            {navItems.map((item) => (
+              <a key={item.label} href={item.href} className="nav-link">
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <a href="#contact" className="nav-cta">
+            Let&apos;s Talk <ArrowUpRight size={14} />
+          </a>
+
+          <button
+            className="menu-toggle"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </nav>
-        <a className="header-cta" href="#contact">Let&apos;s talk <ArrowUpRight size={14} /></a>
-        <button
-          className="menu-toggle"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-nav"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
       </header>
 
+      {/* Mobile Drawer */}
       {menuOpen && (
-        <motion.nav
-          id="mobile-nav"
-          className="mobile-menu"
-          aria-label="Mobile navigation"
-          initial={{ opacity: 0, y: -8 }}
+        <motion.div
+          className="mobile-drawer"
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
         >
-          {nav.map(([label, href]) => (
-            <a key={label} href={href} onClick={() => setMenuOpen(false)}>
-              {label}
-              <ArrowUpRight size={16}/>
+          {navItems.map((item) => (
+            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
+              <span>{item.label}</span>
+              <ArrowUpRight size={15} />
             </a>
           ))}
-          <a className="mobile-cta" href="#contact" onClick={() => setMenuOpen(false)}>
-            Let&apos;s talk <ArrowUpRight size={16}/>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>
+            <span>Let&apos;s Talk</span>
+            <ArrowUpRight size={15} />
           </a>
-        </motion.nav>
+        </motion.div>
       )}
 
-      <section className="hero section-shell" id="top">
-        <div className="hero-copy">
-          <Reveal><div className="eyebrow"><span className="status-dot" /> INDEPENDENT DEVELOPER · SRI LANKA <span className="eyebrow-line" /></div></Reveal>
-          <Reveal delay={0.08}>
-            <h1>Designing<br /><span className="muted-word">what’s</span> next<span className="outline-word">.</span></h1>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="hero-description">I&apos;m Charitha — a <strong>developer and AI builder</strong> creating thoughtful digital products, intelligent tools and automation systems.</p>
-          </Reveal>
-          <Reveal delay={0.24}>
-            <div className="hero-actions">
-              <a className="button button-light" href="#work">Explore my work <ArrowDownRight size={17}/></a>
-              <a className="text-link" href="#about">Get to know me <ArrowUpRight size={15}/></a>
+      {/* Hero Section */}
+      <section className="section-shell hero-section" id="top">
+        <div className="hero-content">
+          <Reveal>
+            <div className="status-badge">
+              <span className="pulse-dot" />
+              <span>AVAILABLE FOR NEW PROJECTS · SRI LANKA</span>
             </div>
           </Reveal>
-          <Reveal delay={0.32}>
-            <div className="hero-meta">
-              <div><span className="meta-label">BASED IN</span><span>Sri Lanka · UTC +5:30</span></div>
-              <div><span className="meta-label">LOCAL TIME</span><span>{time || "—"} <span className="live-dot" /></span></div>
-              <div><span className="meta-label">FOCUS</span><span>AI-first development</span></div>
+
+          <Reveal delay={0.08}>
+            <h1 className="hero-title">
+              Hi, I&apos;m <span className="gradient-text">Charitha</span>.
+              <br />
+              Building what&apos;s next.
+            </h1>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <p className="hero-subtitle">
+              An independent <strong>full-stack developer and AI builder</strong> creating
+              high-performance digital products, intelligent autonomous agents, and refined software
+              architectures.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.22}>
+            <div className="hero-actions">
+              <a href="#projects" className="btn-primary">
+                Explore Selected Work <ArrowDown size={15} />
+              </a>
+              <a
+                href="https://github.com/charitha-only"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-secondary"
+              >
+                <Github size={16} /> GitHub Profile
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.3}>
+            <div className="hero-meta-bar">
+              <div className="meta-item">
+                <span className="meta-kicker">LOCATION</span>
+                <span className="meta-val">Sri Lanka (UTC +5:30)</span>
+              </div>
+              <div className="meta-item">
+                <span className="meta-kicker">LOCAL TIME</span>
+                <span className="meta-val">{time || "—"} Colombo</span>
+              </div>
+              <div className="meta-item">
+                <span className="meta-kicker">CORE FOCUS</span>
+                <span className="meta-val">AI Systems &amp; Modern Web</span>
+              </div>
             </div>
           </Reveal>
         </div>
 
-        <Reveal delay={0.18} className="hero-visual-wrap">
-          <div className="hero-visual">
-            <div className="portrait-frame">
+        {/* Hero Portrait Showcase */}
+        <Reveal delay={0.18} className="hero-portrait-card">
+          <div className="portrait-glow-back" aria-hidden="true" />
+          <div className="portrait-neon-frame">
+            <span className="corner-bracket bracket-tl" />
+            <span className="corner-bracket bracket-tr" />
+            <span className="corner-bracket bracket-bl" />
+            <span className="corner-bracket bracket-br" />
+
+            <div className="portrait-inner">
               {!portraitFailed ? (
                 <img
                   src="/images/portfolio-portrait-dark-hero.webp"
-                  alt="Charitha, developer and AI builder"
+                  alt="Charitha — Developer and AI Builder"
                   width={728}
                   height={540}
                   fetchPriority="high"
                   onError={() => setPortraitFailed(true)}
                 />
               ) : (
-                <div className="portrait-fallback">
-                  <span className="fallback-initials">C.</span>
-                  <span className="fallback-caption">PORTRAIT IMAGE<br/>WILL APPEAR HERE</span>
+                <div className="gallery-fallback">
+                  <span className="fallback-tag">01 / CREATOR PROFILE</span>
+                  <span className="fallback-title">CHARITHA · DEVELOPER</span>
                 </div>
               )}
-              <div className="portrait-vignette" />
-              <div className="portrait-index">01 / CREATOR PROFILE</div>
             </div>
-            <div className="visual-stamp"><span>AI</span><small>IDEAS INTO<br/>REALITY</small></div>
-            <div className="visual-caption"><span>INDEPENDENT BUILDER</span><span>2026 — NOW</span></div>
+
+            <div className="portrait-badge-floating">
+              <span className="badge-role">
+                <span className="badge-code">&lt;/&gt;</span> Full-Stack &amp; AI Builder
+              </span>
+              <span className="badge-tag">2026 — NOW</span>
+            </div>
           </div>
         </Reveal>
-        <a className="scroll-cue" href="#about"><span>SCROLL TO EXPLORE</span><ArrowDown size={15}/></a>
-        <div className="hero-index">01 — 05</div>
       </section>
 
-      <section className="ticker" aria-label="Areas of focus">
+      {/* Infinite Focus Ticker */}
+      <section className="ticker-section" aria-label="Areas of expertise">
         <div className="ticker-track">
-          {Array.from({ length: 2 }).map((_, i) => <div className="ticker-set" key={i}>
-            {["AI VIBE CODING", "AGENT SYSTEMS", "AUTOMATION", "FULL-STACK", "PRODUCT BUILDING"].map((item) => <span key={item}>{item}<i>✳</i></span>)}
-          </div>)}
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div className="ticker-group" key={i}>
+              {[
+                "AI VIBE CODING",
+                "AGENT ARCHITECTURE",
+                "SYSTEMS ENGINEERING",
+                "FULL-STACK NEXT.JS",
+                "WORKFLOW AUTOMATION",
+                "LOCAL-FIRST APPS"
+              ].map((text) => (
+                <span className="ticker-item" key={text}>
+                  <Sparkles size={12} /> {text}
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="content-section section-shell about-section" id="about">
-        <Reveal><div className="section-kicker">01 / THE PERSON BEHIND THE BUILDS</div></Reveal>
-        <div className="about-grid">
-          <Reveal><h2>Curiosity first.<br/><span className="muted-word">Build with intent.</span></h2></Reveal>
+      {/* Bento Capabilities Section */}
+      <section className="section-shell" id="capabilities" style={{ paddingTop: 130, paddingBottom: 60 }}>
+        <Reveal>
+          <span className="section-kicker">01 / CORE CAPABILITIES</span>
+        </Reveal>
+
+        <div className="section-heading-block">
+          <Reveal>
+            <h2 className="section-title">
+              Engineered with precision.<br />
+              <span className="gradient-text">Powered by AI intelligence.</span>
+            </h2>
+          </Reveal>
           <Reveal delay={0.1}>
-            <div className="about-copy">
-              <p className="large-copy">I&apos;m an independent developer exploring what becomes possible when human ideas meet modern AI tools.</p>
-              <p>I use AI-assisted coding as a practical way to research, design, build and improve real software. My work spans web experiences, desktop applications, mobile products, AI agent workflows and automation.</p>
-              <p>I care about more than getting code to run. I care about the details — a clear user experience, thoughtful engineering, useful features and products people enjoy using.</p>
-              <a className="underlined-link" href="https://github.com/charitha-only" target="_blank" rel="noreferrer">More on GitHub <ArrowUpRight size={15}/></a>
+            <p className="section-description">
+              Bridging modern software engineering with agentic capabilities to deliver robust, scalable,
+              and delight-inducing user experiences.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Bento Grid */}
+        <div className="bento-grid">
+          {/* Bento Card 1: Full-Stack & Systems (Large) */}
+          <Reveal className="bento-card">
+            <div>
+              <div className="bento-card-header">
+                <div className="bento-icon-box">
+                  <Code2 size={22} />
+                </div>
+                <span className="bento-number">01 / SYSTEMS</span>
+              </div>
+              <h3 className="bento-title">Full-Stack &amp; Systems Engineering</h3>
+              <p className="bento-text">
+                Developing resilient, type-safe web and desktop applications from clean architectural
+                foundations to production cloud deployments.
+              </p>
+            </div>
+
+            <div className="code-mockup">
+              <div className="code-header">
+                <span className="window-dot dot-red" />
+                <span className="window-dot dot-yellow" />
+                <span className="window-dot dot-green" />
+                <span className="code-file">core/orchestrator.ts</span>
+              </div>
+              <div>
+                <span className="code-syntax-comm">// Type-safe agent execution pipeline</span>
+                <br />
+                <span className="code-syntax-kw">async function</span>{" "}
+                <span className="code-syntax-fn">dispatchMission</span>(goal: AgentIntent) &#123;
+                <br />
+                &nbsp;&nbsp;<span className="code-syntax-kw">const</span> engine ={" "}
+                <span className="code-syntax-kw">await</span>{" "}
+                <span className="code-syntax-fn">initSystemsCore</span>(&#123; rustSecurity:{" "}
+                <span className="code-syntax-str">true</span> &#125;);
+                <br />
+                &nbsp;&nbsp;<span className="code-syntax-kw">return</span>{" "}
+                <span className="code-syntax-kw">await</span> engine.
+                <span className="code-syntax-fn">runAutonomousLoop</span>(goal);
+                <br />
+                &#125;
+              </div>
+            </div>
+
+            <div className="tech-pills" style={{ marginTop: 20 }}>
+              <span className="tech-pill">Next.js 15</span>
+              <span className="tech-pill">React 19</span>
+              <span className="tech-pill">TypeScript</span>
+              <span className="tech-pill">Rust Core</span>
+            </div>
+          </Reveal>
+
+          {/* Bento Card 2: AI Agent Systems */}
+          <div className="bento-subgrid" style={{ gridTemplateColumns: "1fr" }}>
+            <Reveal delay={0.08} className="bento-card">
+              <div>
+                <div className="bento-card-header">
+                  <div className="bento-icon-box">
+                    <Bot size={22} />
+                  </div>
+                  <span className="bento-number">02 / AGENTS</span>
+                </div>
+                <h3 className="bento-title">AI Agents &amp; Autonomous Workflows</h3>
+                <p className="bento-text">
+                  Designing multi-step agent toolsets, prompt frameworks, and self-verifying pipelines
+                  that automate real-world complexity.
+                </p>
+              </div>
+
+              <div className="workflow-nodes">
+                <span className="node-box">User Goal</span>
+                <span className="node-arrow">➔</span>
+                <span className="node-box node-active">Agent Logic</span>
+                <span className="node-arrow">➔</span>
+                <span className="node-box">Tool Exec</span>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.16} className="bento-card">
+              <div>
+                <div className="bento-card-header">
+                  <div className="bento-icon-box">
+                    <Workflow size={22} />
+                  </div>
+                  <span className="bento-number">03 / AUTOMATION</span>
+                </div>
+                <h3 className="bento-title">Workflow Automation &amp; Tooling</h3>
+                <p className="bento-text">
+                  Connecting APIs, local databases, and cloud infrastructure to eliminate repetitive
+                  manual operations.
+                </p>
+              </div>
+              <div className="tech-pills">
+                <span className="tech-pill">&lt; 100ms Response</span>
+                <span className="tech-pill">Event-Driven</span>
+                <span className="tech-pill">Zero Manual Friction</span>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects Showcase */}
+      <section className="section-shell projects-section" id="projects">
+        <Reveal>
+          <span className="section-kicker">02 / FEATURED WORK</span>
+        </Reveal>
+
+        <div className="section-heading-block">
+          <Reveal>
+            <h2 className="section-title">
+              Selected Projects &amp;<br />
+              <span className="gradient-text">Open Source Systems.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="section-description">
+              A curated collection of public repositories showcasing systems engineering, desktop
+              applications, and creative AI skills.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <Reveal key={project.name} delay={index * 0.06}>
+              <article className="project-card">
+                <div>
+                  <div className="project-top-row">
+                    <span className="project-cat-badge">{project.category}</span>
+                    <span className="project-status-pill">
+                      <span className="project-status-dot" />
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <h3 className="project-card-title">
+                    <span>{project.name}</span>
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`View ${project.name} on GitHub`}
+                    >
+                      <ArrowUpRight size={22} className="project-title-arrow" />
+                    </a>
+                  </h3>
+
+                  <p className="project-card-desc">{project.description}</p>
+                </div>
+
+                <div className="project-card-footer">
+                  <div className="tech-pills">
+                    {project.stack.map((item) => (
+                      <span key={item} className="tech-pill">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="project-action-link"
+                  >
+                    <Github size={14} /> View Repository
+                  </a>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.2} style={{ textAlign: "center", marginTop: 48 }}>
+          <a
+            href="https://github.com/charitha-only?tab=repositories"
+            target="_blank"
+            rel="noreferrer"
+            className="btn-secondary"
+          >
+            Explore All Repositories on GitHub <ArrowUpRight size={15} />
+          </a>
+        </Reveal>
+      </section>
+
+      {/* About & Dual Portrait Gallery */}
+      <section className="section-shell about-section" id="about">
+        <Reveal>
+          <span className="section-kicker">03 / THE BUILDER</span>
+        </Reveal>
+
+        <div className="about-layout">
+          <div>
+            <Reveal>
+              <h2 className="section-title" style={{ marginBottom: 24 }}>
+                Curiosity first.<br />
+                <span className="gradient-text">Build with intent.</span>
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.08} className="about-prose">
+              <p className="about-lead">
+                I&apos;m an independent developer exploring what becomes possible when human ingenuity
+                collaborates with modern AI tooling.
+              </p>
+              <p>
+                Rather than treating AI as a novelty, I use AI-first workflows to research faster,
+                architect deeper, and ship reliable software. My focus spans reactive web interfaces,
+                secure desktop applications, mobile tools, and autonomous agent loops.
+              </p>
+              <p>
+                I care deeply about software craftsmanship: smooth 60fps transitions, resilient error
+                boundaries, accessible markup, and products people love using every day.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Dual Portrait Gallery */}
+          <Reveal delay={0.15}>
+            <div className="dual-portrait-grid">
+              <div className="portrait-showcase-item">
+                {!officeFailed ? (
+                  <img
+                    src="/images/portfolio-portrait-office.webp"
+                    alt="Charitha in workspace environment"
+                    width={728}
+                    height={540}
+                    loading="lazy"
+                    onError={() => setOfficeFailed(true)}
+                  />
+                ) : (
+                  <div className="gallery-fallback">
+                    <span className="fallback-tag">01 / WORKSPACE</span>
+                    <span className="fallback-title">THE BUILDER</span>
+                  </div>
+                )}
+                <div className="portrait-card-caption">
+                  <span>01 — WORKSPACE PROFILE</span>
+                  <span className="portrait-caption-tag">THE BUILDER</span>
+                </div>
+              </div>
+
+              <div className="portrait-showcase-item">
+                {!techFailed ? (
+                  <img
+                    src="/images/portfolio-portrait-tech.webp"
+                    alt="Charitha in cinematic technology portrait"
+                    width={728}
+                    height={540}
+                    loading="lazy"
+                    onError={() => setTechFailed(true)}
+                  />
+                ) : (
+                  <div className="gallery-fallback">
+                    <span className="fallback-tag">02 / TECH PROFILE</span>
+                    <span className="fallback-title">THE THINKER</span>
+                  </div>
+                )}
+                <div className="portrait-card-caption">
+                  <span>02 — COGNITIVE PROFILE</span>
+                  <span className="portrait-caption-tag">THE THINKER</span>
+                </div>
+              </div>
             </div>
           </Reveal>
         </div>
-        <Reveal>
-          <div className="portrait-gallery" aria-label="Portrait photography">
-            <figure>
-              {!officeFailed ? (
-                <img
-                  src="/images/portfolio-portrait-office.webp"
-                  alt="Charitha in a modern workspace"
-                  width={728}
-                  height={540}
-                  loading="lazy"
-                  onError={() => setOfficeFailed(true)}
-                />
-              ) : (
-                <div className="gallery-fallback">
-                  <span className="fallback-tag">01 / WORKSPACE</span>
-                  <span className="fallback-title">THE BUILDER</span>
-                </div>
-              )}
-              <figcaption>01 — THE BUILDER</figcaption>
-            </figure>
-            <figure>
-              {!techFailed ? (
-                <img
-                  src="/images/portfolio-portrait-tech.webp"
-                  alt="Charitha in a cinematic technology portrait"
-                  width={728}
-                  height={540}
-                  loading="lazy"
-                  onError={() => setTechFailed(true)}
-                />
-              ) : (
-                <div className="gallery-fallback">
-                  <span className="fallback-tag">02 / TECHNOLOGY</span>
-                  <span className="fallback-title">THE THINKER</span>
-                </div>
-              )}
-              <figcaption>02 — THE THINKER</figcaption>
-            </figure>
+
+        <Reveal delay={0.2}>
+          <div className="approach-capsule">
+            <span className="approach-tag">MY CORE PHILOSOPHY</span>
+            <p className="approach-text">
+              &ldquo;Think deeply. Build with AI. Test rigorously. Keep refining.&rdquo;
+            </p>
+            <Sparkles size={20} style={{ color: "var(--accent)" }} />
           </div>
         </Reveal>
-        <Reveal><div className="principle-strip"><span>MY APPROACH</span><p>Think deeply. Build with AI. Test carefully. Keep improving.</p><Sparkles size={18}/></div></Reveal>
       </section>
 
-      <section className="content-section section-shell capabilities-section" id="capabilities">
-        <Reveal><div className="section-kicker">02 / WHAT I DO</div></Reveal>
-        <div className="section-heading-row">
-          <Reveal><h2>From a blank page<br/>to <span className="muted-word">something real.</span></h2></Reveal>
-          <Reveal><p className="section-intro">A flexible, AI-first approach to building digital products — from the first sketch to the final details.</p></Reveal>
-        </div>
-        <div className="capability-grid">
-          {capabilities.map((item, i) => {
-            const Icon = item.icon;
-            return <Reveal key={item.title} delay={i * 0.07}>
-              <article className="capability-card">
-                <div className="capability-top"><Icon size={21}/><span>0{i + 1}</span></div>
-                <h3>{item.title}</h3><p>{item.text}</p><ArrowUpRight className="card-arrow" size={18}/>
-              </article>
-            </Reveal>;
-          })}
-        </div>
-      </section>
+      {/* AI Toolkit Section */}
+      <section className="section-shell toolkit-section" id="toolkit">
+        <Reveal>
+          <span className="section-kicker">04 / INTELLIGENCE TOOLKIT</span>
+        </Reveal>
 
-      <section className="work-section" id="work">
-        <div className="section-shell">
-          <Reveal><div className="section-kicker">03 / SELECTED WORK <span className="kicker-count">05 PROJECTS</span></div></Reveal>
-          <div className="section-heading-row work-heading">
-            <Reveal><h2>Ideas made<br/><span className="muted-word">tangible.</span></h2></Reveal>
-            <Reveal><p className="section-intro">A selection of experiments and products from my GitHub. Each one is a chance to learn, solve a problem and push an idea further.</p></Reveal>
-          </div>
-          <div className="project-list">
-            {projects.map((project, i) => (
-              <Reveal key={project.name} delay={i * 0.035}>
-                <a className="project-row" href={project.href} target="_blank" rel="noreferrer">
-                  <span className="project-number">{project.number}</span>
-                  <div className="project-main">
-                    <span className="project-category">{project.category}</span>
-                    <h3>{project.name}</h3>
-                    <p>{project.description}</p>
-                    <div className="project-tags">{project.stack.map(tag => <span key={tag}>{tag}</span>)}</div>
-                  </div>
-                  <div className="project-side"><span>{project.status}</span><span className="project-open"><ArrowUpRight size={19}/></span></div>
-                </a>
-              </Reveal>
+        <div className="section-heading-block">
+          <Reveal>
+            <h2 className="section-title">
+              Working with<br />
+              <span className="gradient-text">Augmented Intelligence.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="section-description">
+              State-of-the-art AI systems form my everyday workbench—augmenting code generation,
+              debugging, system refactoring, and creative development.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="toolkit-grid">
+          {tools.map((tool, idx) => (
+            <Reveal key={tool.name} delay={idx * 0.06}>
+              <div className="tool-card">
+                <div className="tool-symbol-box">{tool.symbol}</div>
+                <div className="tool-info">
+                  <h3>{tool.name}</h3>
+                  <p>{tool.type}</p>
+                </div>
+                <div style={{ marginTop: "auto" }}>
+                  <span className="tech-pill">{tool.status}</span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.2}>
+          <div className="skills-cloud-box">
+            {skills.map((skill) => (
+              <span key={skill} className="skill-tag">
+                {skill}
+              </span>
             ))}
           </div>
-          <Reveal><a className="all-projects" href="https://github.com/charitha-only?tab=repositories" target="_blank" rel="noreferrer">Explore all repositories <ArrowUpRight size={16}/></a></Reveal>
-        </div>
+        </Reveal>
       </section>
 
-      <section className="content-section section-shell toolkit-section" id="toolkit">
-        <Reveal><div className="section-kicker">04 / MY AI TOOLKIT</div></Reveal>
-        <div className="toolkit-grid">
-          <Reveal><div><h2>Working with<br/><span className="muted-word">intelligence.</span></h2><p className="section-intro toolkit-intro">AI is part of my everyday build process — helping me move from research and planning to implementation, iteration and automation.</p><div className="toolkit-note"><Zap size={17}/><span>Tools are collaborators. Product thinking still leads.</span></div></div></Reveal>
-          <div className="tool-list">
-            {tools.map((tool, i) => <Reveal key={tool.name} delay={i * 0.06}><div className="tool-row"><span className="tool-symbol">{tool.icon}</span><div><h3>{tool.name}</h3><p>{tool.type}</p></div><span className="tool-arrow"><ArrowUpRight size={16}/></span></div></Reveal>)}
+      {/* Contact Section */}
+      <section className="section-shell contact-section" id="contact">
+        <Reveal>
+          <div className="contact-card-cinematic">
+            <span className="section-kicker">05 / GET IN TOUCH</span>
+            <h2 className="contact-big-title">
+              Let&apos;s build something<br />
+              <span className="contact-outline-word">exceptional.</span>
+            </h2>
+            <p className="contact-desc">
+              Have an ambitious vision, a challenging technical problem, or an agent automation concept?
+              Let&apos;s connect and make it a reality.
+            </p>
+
+            <div className="contact-action-row">
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="btn-copy-email"
+                aria-label="Copy email address"
+              >
+                {copiedEmail ? <Check size={16} /> : <Copy size={16} />}
+                {copiedEmail ? "Email copied to clipboard!" : "contact@malsanka.com"}
+              </button>
+
+              <a
+                href="https://github.com/charitha-only"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-secondary"
+              >
+                <Github size={16} /> Connect on GitHub
+              </a>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Footer */}
+      <footer className="site-footer">
+        <div className="section-shell footer-inner">
+          <div className="footer-brand">
+            C<span>.</span>
+          </div>
+
+          <div>Designed with intention · Built with curiosity · Sri Lanka</div>
+
+          <div className="footer-links">
+            <a href="https://github.com/charitha-only" target="_blank" rel="noreferrer">
+              GitHub <ExternalLink size={12} />
+            </a>
+            <a href="#top">Back to top ↑</a>
           </div>
         </div>
-        <Reveal><div className="capability-cloud">
-          {["AI-assisted coding", "Agent design", "Workflow automation", "Prompt engineering", "React", "Next.js", "TypeScript", "Node.js", "Rust", "Flutter", "Git & GitHub", "Vercel"].map((skill) => <span key={skill}>{skill}</span>)}
-        </div></Reveal>
-        <p className="small-note">The toolkit reflects technologies and platforms I work with or explore. Specific tools and frameworks vary by project.</p>
-      </section>
-
-      <section className="contact-section" id="contact">
-        <div className="section-shell contact-inner">
-          <Reveal><div className="section-kicker">05 / HAVE AN IDEA?</div></Reveal>
-          <Reveal><h2>Let&apos;s make<br/>it <span className="outline-word">happen.</span></h2></Reveal>
-          <Reveal><p>Have a meaningful idea, an interesting challenge or a project in mind? Let’s build something useful.</p></Reveal>
-          <Reveal><div className="contact-actions">
-            <a className="button button-light" href="https://github.com/charitha-only" target="_blank" rel="noreferrer">Connect on GitHub <Github size={17}/></a>
-            <a className="text-link" href="https://github.com/charitha-only?tab=repositories" target="_blank" rel="noreferrer">Explore my work <ArrowUpRight size={15}/></a>
-          </div></Reveal>
-          <div className="contact-orbit orbit-one"/><div className="contact-orbit orbit-two"/>
-        </div>
-      </section>
-
-      <footer className="footer section-shell">
-        <a className="brand footer-brand" href="#top">C<span>.</span></a>
-        <span>Designed with intention · Built with curiosity.</span>
-        <div><a href="https://github.com/charitha-only" target="_blank" rel="noreferrer">GITHUB <ArrowUpRight size={12}/></a><span>© {new Date().getFullYear()} CHARITHA</span></div>
       </footer>
     </main>
   );
