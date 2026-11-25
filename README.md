@@ -15,11 +15,13 @@ npm run dev
 ```
 
 ## Add your portrait
-Create `public/images/` and upload your chosen original portrait as:
+Create `public/images/` and add these three supplied portraits (keep the original face and skin tone unchanged):
 
-`public/images/charitha-hero.webp`
+- `portfolio-portrait-dark-hero.jpg` — hero portrait
+- `portfolio-portrait-office.jpg` — About gallery, workspace portrait
+- `portfolio-portrait-tech.jpg` — About gallery, technology portrait
 
-Use a WebP or AVIF export, around 1200–1600px high and ideally below 350 KB. Preserve your original face and skin tone. The hero section has a designed fallback until the image is present.
+Use optimized WebP exports if possible. The site falls back gracefully if the hero image is missing; gallery images should be added before production deployment.
 
 ## Deploy
 1. Import `charitha-only/charitha-only.github.io` into Vercel.
