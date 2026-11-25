@@ -289,7 +289,7 @@ button:focus-visible {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(880px, 88vw);
+  width: min(680px, 72vw);
   z-index: 2;
   pointer-events: none;
   display: flex;
@@ -299,12 +299,12 @@ button:focus-visible {
 .hero-subject-image {
   width: 100%;
   height: auto;
-  max-height: 78vh;
+  max-height: 64vh;
   object-fit: contain;
   object-position: bottom center;
   display: block;
-  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
   filter: contrast(1.04) brightness(1.02);
 }
 
