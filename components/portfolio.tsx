@@ -104,7 +104,7 @@ export default function Portfolio() {
           <div className="hero-visual">
             <div className="portrait-frame">
               {!portraitFailed ? (
-                <img src="/images/portfolio-portrait-dark-hero.jpg" alt="Charitha, developer and AI builder" fetchPriority="high" onError={() => setPortraitFailed(true)} />
+                <img src="/images/portfolio-portrait-dark-hero.webp" alt="Charitha, developer and AI builder" fetchPriority="high" onError={() => setPortraitFailed(true)} />
               ) : (
                 <div className="portrait-fallback">
                   <span className="fallback-initials">C.</span>
@@ -143,7 +143,7 @@ export default function Portfolio() {
             </div>
           </Reveal>
         </div>
-        <Reveal><div className="portrait-gallery" aria-label="Portrait photography"><figure><img src="/images/portfolio-portrait-office.jpg" alt="Charitha in a modern workspace" loading="lazy" /><figcaption>01 — THE BUILDER</figcaption></figure><figure><img src="/images/portfolio-portrait-tech.jpg" alt="Charitha in a cinematic technology portrait" loading="lazy" /><figcaption>02 — THE THINKER</figcaption></figure></div></Reveal>
+        <Reveal><div className="portrait-gallery" aria-label="Portrait photography"><figure><img src="/images/portfolio-portrait-office.webp" alt="Charitha in a modern workspace" loading="lazy" /><figcaption>01 — THE BUILDER</figcaption></figure><figure><img src="/images/portfolio-portrait-tech.webp" alt="Charitha in a cinematic technology portrait" loading="lazy" /><figcaption>02 — THE THINKER</figcaption></figure></div></Reveal>
         <Reveal><div className="principle-strip"><span>MY APPROACH</span><p>Think deeply. Build with AI. Test carefully. Keep improving.</p><Sparkles size={18}/></div></Reveal>
       </section>
 
