@@ -8,6 +8,7 @@ import {
   Workflow, X, Zap
 } from "lucide-react";
 import { projects } from "@/data/projects";
+import { HumanEvolution } from "@/components/human-evolution";
 
 const tools = [
   { name: "OpenAI Codex", type: "AI coding agent & synthesis", symbol: "✳", status: "Active" },
@@ -75,9 +76,9 @@ export default function Portfolio() {
         clearInterval(timer);
         setTimeout(() => {
           setLoading(false);
-        }, 300); // dramatic pause at 100% before reveal
+        }, 350); // dramatic pause at 100% before reveal
       }
-    }, 26); // 100 steps * 26ms = 2.6s progress + 0.3s pause = 2.9s total
+    }, 28); // 100 steps * 28ms = 2.8s progress + 0.35s pause = ~3.15s total
 
     return () => clearInterval(timer);
   }, []);
@@ -94,11 +95,11 @@ export default function Portfolio() {
   }, [loading]);
 
   const getLoadingStep = (pct: number) => {
-    if (pct < 22) return "INITIALIZING SYSTEM RUNTIME...";
-    if (pct < 48) return "COMPILING NEURAL AGENT WORKFLOWS...";
-    if (pct < 74) return "MOUNTING CINEMATIC AMBER SHADERS...";
-    if (pct < 94) return "OPTIMIZING CORE WEB VITALS...";
-    return "SYSTEM READY. WELCOME TO PORTFOLIO";
+    if (pct < 22) return "ERA 01 // AUSTRALOPITHECUS (~4M BC) • BIPEDAL ORIGINS";
+    if (pct < 44) return "ERA 02 // HOMO HABILIS (~2M BC) • FIRST TOOLMAKERS";
+    if (pct < 66) return "ERA 03 // HOMO ERECTUS (~300K BC) • MASTERY OF FIRE";
+    if (pct < 88) return "ERA 04 // HOMO SAPIENS (~50K BC) • COGNITIVE REVOLUTION";
+    return "ERA 05 // HOMO SYNTHETICUS (PRESENT) • AI AGENT ARCHITECT";
   };
 
   useEffect(() => {
@@ -142,7 +143,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.5 }}
               >
                 <span className="preloader-dot" />
-                <span>WORKSPACE KERNEL v2.5 // BOOT SEQUENCE</span>
+                <span>MARCH OF PROGRESS // HUMAN EVOLUTION TO AI</span>
               </motion.div>
 
               <motion.h1
@@ -160,8 +161,18 @@ export default function Portfolio() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.16 }}
               >
-                CHARITHA MALSANKA • FULL STACK &amp; AI BUILDER
+                FROM PRIMAL TOOLMAKERS TO AUTONOMOUS AI ARCHITECTS
               </motion.p>
+
+              {/* March of Progress: Human Evolution Motion Graphic */}
+              <motion.div
+                className="preloader-evolution-wrap"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.18 }}
+              >
+                <HumanEvolution progress={progress} />
+              </motion.div>
 
               {/* Code Compilation Progress Box */}
               <motion.div
@@ -173,9 +184,9 @@ export default function Portfolio() {
                 <div className="preloader-code-header">
                   <div className="preloader-code-header-left">
                     <Code2 size={13} />
-                    <span>runtime/orchestrator.ts</span>
+                    <span>evolution/homo_syntheticus.ts</span>
                   </div>
-                  <span>{progress < 100 ? "OPTIMIZING..." : "ONLINE"}</span>
+                  <span>{progress < 100 ? "EVOLVING..." : "ONLINE"}</span>
                 </div>
 
                 <div className="preloader-counter-wrap">
@@ -204,7 +215,7 @@ export default function Portfolio() {
 
                 {/* Terminal line */}
                 <div className="preloader-terminal-line">
-                  <span className="preloader-terminal-prompt">charitha@kernel:~$</span>
+                  <span className="preloader-terminal-prompt">charitha@evolution:~$</span>
                   <span>{getLoadingStep(progress).toLowerCase()}</span>
                   <span className="preloader-cursor" />
                 </div>
@@ -220,7 +231,7 @@ export default function Portfolio() {
                 <span className="preloader-tag">NEXT.JS 15</span>
                 <span className="preloader-tag">REACT 19</span>
                 <span className="preloader-tag">AI AGENTS</span>
-                <span className="preloader-tag">SYSTEMS</span>
+                <span className="preloader-tag">FULL STACK</span>
               </motion.div>
             </div>
           </motion.div>
