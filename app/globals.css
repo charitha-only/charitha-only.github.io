@@ -204,6 +204,247 @@ button:focus-visible {
 }
 
 /* =========================================
+   CINEMATIC PRELOADER (Motion Graphics)
+   ========================================= */
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #050505;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.preloader-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(214, 173, 122, 0.16) 0%, rgba(214, 173, 122, 0.03) 50%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.preloader-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(214, 173, 122, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214, 173, 122, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  pointer-events: none;
+}
+
+.preloader-content {
+  position: relative;
+  z-index: 2;
+  width: min(580px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.preloader-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  background: rgba(214, 173, 122, 0.08);
+  border: 1px solid rgba(214, 173, 122, 0.28);
+  border-radius: 9999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(214, 173, 122, 0.1);
+}
+
+.preloader-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: preloaderPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes preloaderPulse {
+  from { opacity: 0.4; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.preloader-title {
+  font-family: var(--heading);
+  font-size: clamp(26px, 4.8vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.preloader-title .gold-text {
+  color: #f7dfbe;
+  text-shadow: 0 0 32px rgba(214, 173, 122, 0.6);
+}
+
+.preloader-subtitle {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin: -6px 0 4px;
+}
+
+/* Coding Console & Progress Bar Card */
+.preloader-code-box {
+  width: 100%;
+  background: rgba(14, 14, 14, 0.88);
+  border: 1px solid rgba(214, 173, 122, 0.24);
+  border-radius: 16px;
+  padding: 20px 24px;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(214, 173, 122, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preloader-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 10px;
+}
+
+.preloader-code-header-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+}
+
+.preloader-counter-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.preloader-percentage {
+  font-family: var(--mono);
+  font-size: clamp(38px, 6vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 24px rgba(214, 173, 122, 0.4);
+}
+
+.preloader-percentage span {
+  font-size: 18px;
+  color: var(--accent);
+  margin-left: 2px;
+}
+
+.preloader-status-step {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-align: right;
+  max-width: 280px;
+  line-height: 1.4;
+}
+
+/* Progress bar track & glow fill */
+.preloader-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b0844c 0%, #d6ad7a 60%, #fff0d8 100%);
+  border-radius: 9999px;
+  box-shadow: 0 0 16px #d6ad7a, 0 0 32px rgba(214, 173, 122, 0.6);
+  transition: width 0.1s linear;
+}
+
+.preloader-terminal-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: left;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preloader-terminal-prompt {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.preloader-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 13px;
+  background: var(--accent);
+  margin-left: 4px;
+  animation: cursorBlink 0.8s step-start infinite;
+}
+
+@keyframes cursorBlink {
+  50% { opacity: 0; }
+}
+
+.preloader-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preloader-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(214, 173, 122, 0.75);
+  background: rgba(214, 173, 122, 0.05);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(214, 173, 122, 0.15);
+}
+
+/* =========================================
    CINEMATIC MASTER HERO SECTION (User Spec)
    ========================================= */
 .hero-stage {

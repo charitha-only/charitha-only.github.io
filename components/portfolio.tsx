@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   ArrowDown, ArrowUpRight, Bot, Check, Code2, Copy, Cpu,
   ExternalLink, Github, Layers3, Menu, Sparkles, Terminal,
@@ -62,6 +62,44 @@ export default function Portfolio() {
   const [officeFailed, setOfficeFailed] = useState(false);
   const [techFailed, setTechFailed] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let currentPct = 0;
+    const timer = setInterval(() => {
+      currentPct += 1;
+      setProgress(currentPct);
+
+      if (currentPct >= 100) {
+        clearInterval(timer);
+        setTimeout(() => {
+          setLoading(false);
+        }, 300); // dramatic pause at 100% before reveal
+      }
+    }, 26); // 100 steps * 26ms = 2.6s progress + 0.3s pause = 2.9s total
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [loading]);
+
+  const getLoadingStep = (pct: number) => {
+    if (pct < 22) return "INITIALIZING SYSTEM RUNTIME...";
+    if (pct < 48) return "COMPILING NEURAL AGENT WORKFLOWS...";
+    if (pct < 74) return "MOUNTING CINEMATIC AMBER SHADERS...";
+    if (pct < 94) return "OPTIMIZING CORE WEB VITALS...";
+    return "SYSTEM READY. WELCOME TO PORTFOLIO";
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -79,6 +117,115 @@ export default function Portfolio() {
 
   return (
     <main>
+      {/* Cinematic Motion Graphics Preloader */}
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            key="preloader"
+            className="preloader-overlay"
+            initial={{ opacity: 1 }}
+            exit={{
+              opacity: 0,
+              y: -30,
+              filter: "blur(12px)",
+              transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+            }}
+          >
+            <div className="preloader-glow" aria-hidden="true" />
+            <div className="preloader-grid" aria-hidden="true" />
+
+            <div className="preloader-content">
+              <motion.div
+                className="preloader-badge"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="preloader-dot" />
+                <span>WORKSPACE KERNEL v2.5 // BOOT SEQUENCE</span>
+              </motion.div>
+
+              <motion.h1
+                className="preloader-title"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.08 }}
+              >
+                WELCOME TO MY <span className="gold-text">PORTFOLIO</span>
+              </motion.h1>
+
+              <motion.p
+                className="preloader-subtitle"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.16 }}
+              >
+                CHARITHA MALSANKA • FULL STACK &amp; AI BUILDER
+              </motion.p>
+
+              {/* Code Compilation Progress Box */}
+              <motion.div
+                className="preloader-code-box"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.22 }}
+              >
+                <div className="preloader-code-header">
+                  <div className="preloader-code-header-left">
+                    <Code2 size={13} />
+                    <span>runtime/orchestrator.ts</span>
+                  </div>
+                  <span>{progress < 100 ? "OPTIMIZING..." : "ONLINE"}</span>
+                </div>
+
+                <div className="preloader-counter-wrap">
+                  <div className="preloader-percentage">
+                    {progress.toString().padStart(2, "0")}
+                    <span>%</span>
+                  </div>
+                  <div className="preloader-status-step">
+                    {getLoadingStep(progress)}
+                  </div>
+                </div>
+
+                {/* Progress bar track & fill */}
+                <div
+                  className="preloader-track"
+                  role="progressbar"
+                  aria-valuenow={progress}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
+                  <div
+                    className="preloader-fill"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+
+                {/* Terminal line */}
+                <div className="preloader-terminal-line">
+                  <span className="preloader-terminal-prompt">charitha@kernel:~$</span>
+                  <span>{getLoadingStep(progress).toLowerCase()}</span>
+                  <span className="preloader-cursor" />
+                </div>
+              </motion.div>
+
+              {/* Tech Stack tags */}
+              <motion.div
+                className="preloader-tags"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <span className="preloader-tag">NEXT.JS 15</span>
+                <span className="preloader-tag">REACT 19</span>
+                <span className="preloader-tag">AI AGENTS</span>
+                <span className="preloader-tag">SYSTEMS</span>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Background Atmosphere */}
       <div className="cyber-grid" aria-hidden="true" />
       <div className="ambient-glow-1" aria-hidden="true" />
