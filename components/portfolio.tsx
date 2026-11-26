@@ -160,8 +160,8 @@ export default function Portfolio() {
                 src="/images/portfolio-portrait-hero-transparent.png"
                 alt="Charitha — Web & AI Developer"
                 className="hero-subject-image"
-                width={1448}
-                height={1086}
+                width={788}
+                height={580}
                 fetchPriority="high"
                 onError={() => setPortraitFailed(true)}
               />
