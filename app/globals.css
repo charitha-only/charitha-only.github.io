@@ -249,7 +249,7 @@ button:focus-visible {
 /* Giant Glowing Behind-Subject Text */
 .hero-backdrop-text-wrap {
   position: absolute;
-  top: clamp(100px, 20vh, 210px);
+  top: clamp(80px, 14vh, 160px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -286,38 +286,64 @@ button:focus-visible {
 /* Master Subject Centered (Transparent Cutout) */
 .hero-subject-container {
   position: absolute;
-  bottom: 0;
+  bottom: clamp(60px, 10vh, 120px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(640px, 68vw);
+  width: min(860px, 82vw);
+  max-height: 82vh;
   z-index: 2;
   pointer-events: none;
   display: flex;
   justify-content: center;
+  align-items: flex-end;
 }
 
 .hero-subject-image {
-  width: 100%;
+  width: auto;
   height: auto;
-  max-height: 64vh;
+  max-width: 100%;
+  max-height: 78vh;
   object-fit: contain;
   object-position: bottom center;
   display: block;
-  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 72%, transparent 100%);
   filter: contrast(1.05) brightness(1.02);
+}
+
+@keyframes heroCornerFadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroCornerFadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Bottom Left Corner Box */
 .hero-corner-left {
   position: absolute;
-  bottom: 48px;
+  bottom: clamp(36px, 6vh, 56px);
   left: max(36px, calc((100% - 1320px) / 2));
   z-index: 3;
-  max-width: 360px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  animation: heroCornerFadeLeft 0.6s ease-out;
 }
 
 .corner-tag {
@@ -375,13 +401,14 @@ button:focus-visible {
 /* Bottom Right Corner Box */
 .hero-corner-right {
   position: absolute;
-  bottom: 48px;
+  bottom: clamp(36px, 6vh, 56px);
   right: max(36px, calc((100% - 1320px) / 2));
   z-index: 3;
   text-align: right;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  animation: heroCornerFadeRight 0.6s ease-out;
 }
 
 .corner-slogan {

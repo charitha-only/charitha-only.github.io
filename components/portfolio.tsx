@@ -154,15 +154,18 @@ export default function Portfolio() {
         {/* Master Center Subject Portrait (Transparent Cutout) */}
         <div className="hero-subject-container">
           {!portraitFailed ? (
-            <img
-              src="/images/portfolio-portrait-hero-transparent.png"
-              alt="Charitha — Web & AI Developer"
-              className="hero-subject-image"
-              width={720}
-              height={532}
-              fetchPriority="high"
-              onError={() => setPortraitFailed(true)}
-            />
+            <picture>
+              <source srcSet="/images/portfolio-portrait-hero-transparent.webp" type="image/webp" />
+              <img
+                src="/images/portfolio-portrait-hero-transparent.png"
+                alt="Charitha — Web & AI Developer"
+                className="hero-subject-image"
+                width={1448}
+                height={1086}
+                fetchPriority="high"
+                onError={() => setPortraitFailed(true)}
+              />
+            </picture>
           ) : (
             <img
               src="/images/portfolio-portrait-dark-hero.webp"
@@ -175,12 +178,7 @@ export default function Portfolio() {
         </div>
 
         {/* Bottom Left Corner Content */}
-        <motion.div
-          className="hero-corner-left"
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        <div className="hero-corner-left">
           <span className="corner-tag">I AM</span>
           <h2 className="corner-heading">
             WEB &amp; AI<br />DEVELOPER
@@ -192,15 +190,10 @@ export default function Portfolio() {
           <a href="#projects" className="corner-cta-pill">
             Explore Work <ArrowDown size={13} />
           </a>
-        </motion.div>
+        </div>
 
         {/* Bottom Right Corner Content */}
-        <motion.div
-          className="hero-corner-right"
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
+        <div className="hero-corner-right">
           <div className="corner-slogan">
             <span>DESIGN THAT INSPIRES.</span>
             <span className="slogan-gold">CODE THAT PERFORMS.</span>
@@ -209,7 +202,7 @@ export default function Portfolio() {
             <span>Based in Sri Lanka</span>
             <span className="origin-name">/ Charitha</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Golden Light Ray Swoosh */}
         <div className="hero-bottom-swoosh" aria-hidden="true" />
