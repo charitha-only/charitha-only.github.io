@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { projects } from "@/data/projects";
 import { HumanEvolution } from "@/components/human-evolution";
+import { MotionGraphicCard } from "@/components/motion-graphic-card";
 
 const tools = [
   { name: "OpenAI Codex", type: "AI coding agent & synthesis", symbol: "✳", status: "Active" },
@@ -632,10 +633,14 @@ export default function Portfolio() {
             </Reveal>
           </div>
 
-          {/* Dual Portrait Gallery */}
+          {/* Dual Showcase: Black Portrait & Modern Motion Graphics */}
           <Reveal delay={0.15}>
             <div className="dual-portrait-grid">
               <div className="portrait-showcase-item">
+                <div className="portrait-hud-badge">
+                  <span className="portrait-hud-dot" />
+                  <span>WORKSPACE PROFILE</span>
+                </div>
                 {!officeFailed ? (
                   <img
                     src="/images/portfolio-portrait-office-hd.webp"
@@ -654,30 +659,17 @@ export default function Portfolio() {
                   />
                 )}
                 <div className="portrait-card-caption">
-                  <span>01 — WORKSPACE PROFILE</span>
-                  <span className="portrait-caption-tag">THE BUILDER</span>
+                  <span>01 — THE BUILDER</span>
+                  <span className="portrait-caption-tag">PRIMARY VISUAL</span>
                 </div>
               </div>
 
-              <div className="portrait-showcase-item">
-                {!techFailed ? (
-                  <img
-                    src="/images/portfolio-portrait-tech.webp"
-                    alt="Charitha in cinematic technology portrait"
-                    width={728}
-                    height={540}
-                    loading="lazy"
-                    onError={() => setTechFailed(true)}
-                  />
-                ) : (
-                  <div className="portrait-card-caption">
-                    <span>02 — COGNITIVE PROFILE</span>
-                    <span className="portrait-caption-tag">THE THINKER</span>
-                  </div>
-                )}
+              {/* Modern Animation Motion Graphic Showcase */}
+              <div className="portrait-showcase-item motion-graphic-showcase">
+                <MotionGraphicCard />
                 <div className="portrait-card-caption">
-                  <span>02 — COGNITIVE PROFILE</span>
-                  <span className="portrait-caption-tag">THE THINKER</span>
+                  <span>02 — COGNITIVE RUNTIME</span>
+                  <span className="portrait-caption-tag">MOTION GRAPHICS</span>
                 </div>
               </div>
             </div>
