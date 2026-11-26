@@ -1027,39 +1027,941 @@ button:focus-visible {
   font-size: 11px;
 }
 
-/* Projects Showcase Section */
+/* Projects Showcase Section (Anime.js-Inspired Kinetic Showcase) */
 .projects-section {
   padding-top: 130px;
   padding-bottom: 130px;
   position: relative;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-}
-
-.project-card {
-  position: relative;
-  background: var(--panel-card);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 32px;
+.anime-projects-stack {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  gap: 48px;
+}
+
+.anime-project-row {
+  width: 100%;
+}
+
+.anime-project-card {
+  position: relative;
+  background: rgba(14, 14, 13, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(214, 173, 122, 0.18);
+  border-radius: 24px;
+  padding: 38px 42px;
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 42px;
+  align-items: stretch;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   overflow: hidden;
 }
 
-.project-card:hover {
-  background: var(--panel-card-hover);
-  border-color: var(--line-amber);
-  transform: translateY(-4px);
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.7), 0 0 35px rgba(214, 173, 122, 0.1);
+.anime-project-card:hover {
+  border-color: rgba(214, 173, 122, 0.45);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.85), 0 0 45px rgba(214, 173, 122, 0.1);
+  transform: translateY(-3px);
+}
+
+.anime-project-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.anime-project-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.anime-project-title {
+  font-family: var(--heading);
+  font-size: clamp(28px, 3.2vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.anime-project-num {
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.anime-project-tagline {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #d6ad7a;
+  letter-spacing: 0.06em;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.anime-purpose-box {
+  background: rgba(214, 173, 122, 0.05);
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 18px;
+}
+
+.anime-section-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.anime-purpose-text {
+  font-size: 13px;
+  color: #f1f0ec;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.anime-how-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.anime-workflow-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.anime-workflow-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.anime-check-icon {
+  color: var(--accent);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.anime-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.anime-metric-card {
+  background: rgba(18, 18, 16, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.anime-metric-val {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff2dc;
+  letter-spacing: -0.01em;
+}
+
+.anime-metric-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Right Column: Visual Frame */
+.anime-project-visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.anime-visual-frame {
+  background: #090908;
+  border: 1px solid rgba(214, 173, 122, 0.22);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), inset 0 0 30px rgba(214, 173, 122, 0.03);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.anime-visual-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(14, 14, 12, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--mono);
+}
+
+.anime-visual-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.anime-visual-fps {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+/* Generic Anime Demo Styles */
+.anime-demo-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 16px;
+  min-height: 380px;
+  position: relative;
+}
+
+.anime-demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.anime-hud-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+}
+
+.anime-hud-chip.green {
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #34d399;
+}
+
+.anime-hud-chip.amber {
+  background: rgba(214, 173, 122, 0.1);
+  border: 1px solid rgba(214, 173, 122, 0.3);
+  color: #d6ad7a;
+}
+
+.anime-hud-chip.purple {
+  background: rgba(192, 132, 252, 0.1);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  color: #c084fc;
+}
+
+.anime-interactive-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.anime-interactive-btn:hover {
+  background: rgba(214, 173, 122, 0.15);
+  border-color: rgba(214, 173, 122, 0.4);
+  color: #ffffff;
+}
+
+.anime-interactive-btn.primary {
+  background: rgba(214, 173, 122, 0.2);
+  border-color: rgba(214, 173, 122, 0.5);
+  color: #fff2dc;
+}
+
+.anime-interactive-btn.primary:hover {
+  background: #d6ad7a;
+  color: #0c0c0b;
+}
+
+/* =========================================
+   01. AEGIS DEMO STYLES
+   ========================================= */
+.aegis-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 8px;
+  position: relative;
+}
+
+.aegis-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 16px 20px;
+  background: rgba(18, 18, 16, 0.85);
+  border: 1px solid rgba(214, 173, 122, 0.3);
+  border-radius: 14px;
+  z-index: 2;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.aegis-icon {
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.aegis-node-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.aegis-node-sub {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.aegis-bridge {
+  position: relative;
+  flex: 1;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aegis-bridge-wire {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(214, 173, 122, 0.2);
+}
+
+.aegis-packet {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0c0c0b;
+  box-shadow: 0 0 14px var(--accent);
+  z-index: 3;
+}
+
+.aegis-bridge-badge {
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(214, 173, 122, 0.25);
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  z-index: 2;
+}
+
+.aegis-caps-list {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.aegis-caps-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.aegis-caps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.aegis-cap-card {
+  background: rgba(18, 18, 16, 0.7);
+  border-radius: 6px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.aegis-cap-card.allowed {
+  border-left: 2px solid #34d399;
+}
+
+.aegis-cap-card.blocked {
+  border-left: 2px solid #f87171;
+}
+
+.aegis-cap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9.5px;
+}
+
+.aegis-cap-header code {
+  color: #fff2dc;
+}
+
+.aegis-status-tag {
+  font-size: 7.5px;
+  letter-spacing: 0.08em;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.aegis-cap-card.allowed .aegis-status-tag {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.aegis-cap-card.blocked .aegis-status-tag {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.aegis-cap-meta {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* =========================================
+   02. TOONFORGE DEMO STYLES
+   ========================================= */
+.storyboard-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.storyboard-card {
+  background: rgba(18, 18, 16, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.storyboard-card.active {
+  border-color: var(--accent);
+  background: rgba(35, 26, 15, 0.45);
+  box-shadow: 0 0 16px rgba(214, 173, 122, 0.15);
+}
+
+.storyboard-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 7.5px;
+}
+
+.storyboard-num {
+  color: var(--accent);
+}
+
+.storyboard-tag {
+  color: var(--muted);
+}
+
+.storyboard-canvas {
+  width: 100%;
+  border-radius: 6px;
+  background: #080807;
+  overflow: hidden;
+}
+
+.storyboard-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.storyboard-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.storyboard-beat {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.storyboard-seed {
+  font-family: var(--mono);
+  font-size: 7px;
+  color: var(--muted);
+}
+
+.toonforge-prompt-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(214, 173, 122, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.toonforge-prompt-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.toonforge-prompt-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #e5e5e5;
+  margin: 0;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* =========================================
+   03. SARA NOTE DEMO STYLES
+   ========================================= */
+.desktop-window-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(18, 18, 16, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px 10px 0 0;
+}
+
+.window-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.window-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.window-dot.red { background: #ef4444; }
+.window-dot.yellow { background: #eab308; }
+.window-dot.green { background: #22c55e; }
+
+.window-title {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--text-secondary);
+}
+
+.window-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--accent);
+  background: rgba(214, 173, 122, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.saranote-body {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  background: #080807;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  min-height: 240px;
+}
+
+.saranote-sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.saranote-folder-title {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.saranote-folder-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saranote-folder-item.active {
+  background: rgba(214, 173, 122, 0.15);
+  color: #fff2dc;
+}
+
+.saranote-stats {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.saranote-stat-item {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  color: var(--muted);
+}
+
+.saranote-editor {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.saranote-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+}
+
+.saranote-doc-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #fff;
+}
+
+.saranote-saved-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  color: #34d399;
+}
+
+.saranote-textarea {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: #d6ad7a;
+  white-space: pre-wrap;
+  margin: 0;
+  flex: 1;
+}
+
+.anime-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 12px;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: preloaderPulse 0.9s infinite alternate;
+}
+
+/* =========================================
+   04. SARA PDF DEMO STYLES
+   ========================================= */
+.pdf-format-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.pdf-tab {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pdf-tab.active {
+  background: rgba(214, 173, 122, 0.2);
+  border-color: var(--accent);
+  color: #fff2dc;
+}
+
+.pdf-bezel {
+  background: #080807;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.pdf-document-sheet {
+  background: #11110f;
+  border: 1px solid rgba(214, 173, 122, 0.18);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pdf-sheet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 6px;
+}
+
+.pdf-doc-title {
+  color: #fff;
+}
+
+.pdf-page-indicator {
+  color: var(--accent);
+}
+
+.pdf-sheet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 140px;
+}
+
+.pdf-paragraph-skeleton {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+.pdf-paragraph-skeleton.w-100 { width: 100%; }
+.pdf-paragraph-skeleton.w-90 { width: 90%; }
+.pdf-paragraph-skeleton.w-85 { width: 85%; }
+.pdf-paragraph-skeleton.w-75 { width: 75%; }
+.pdf-paragraph-skeleton.w-60 { width: 60%; }
+
+.pdf-diagram-box {
+  background: rgba(214, 173, 122, 0.08);
+  border: 1px dashed rgba(214, 173, 122, 0.3);
+  border-radius: 6px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 4px 0;
+}
+
+.pdf-sheet-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pdf-scrubber-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.pdf-scrubber-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* =========================================
+   05. DONI UI DEMO STYLES
+   ========================================= */
+.doni-widgets-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px 0;
+  flex-wrap: wrap;
+}
+
+.doni-magnetic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #d6ad7a 0%, #b0844c 100%);
+  color: #0c0c0b;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(214, 173, 122, 0.3);
+}
+
+.doni-spring-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(18, 18, 16, 0.85);
+  border: 1px solid rgba(214, 173, 122, 0.3);
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.doni-switch-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.doni-switch-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.doni-graph-card {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.doni-graph-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.doni-graph-svg {
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 990px) {
+  .anime-project-card {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 28px 24px;
+  }
+  .anime-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .storyboard-track {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .project-top-row {

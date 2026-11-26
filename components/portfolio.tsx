@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
-  ArrowDown, ArrowUpRight, Bot, Check, Code2, Copy, Cpu,
+  ArrowDown, ArrowUpRight, Bot, Check, CheckCircle2, Code2, Copy, Cpu,
   ExternalLink, Github, Layers3, Menu, Sparkles, Terminal,
   Workflow, X, Zap
 } from "lucide-react";
 import { projects } from "@/data/projects";
 import { HumanEvolution } from "@/components/human-evolution";
 import { MotionGraphicCard } from "@/components/motion-graphic-card";
+import { ProjectMotionDemo } from "@/components/project-motion-demos";
 
 const tools = [
   { name: "OpenAI Codex", type: "AI coding agent & synthesis", symbol: "✳", status: "Active" },
@@ -538,12 +539,14 @@ export default function Portfolio() {
           </Reveal>
         </div>
 
-        <div className="projects-grid">
+        {/* Anime.js-Inspired Kinetic Projects Showcase */}
+        <div className="anime-projects-stack">
           {projects.map((project, index) => (
-            <Reveal key={project.name} delay={index * 0.06}>
-              <article className="project-card">
-                <div>
-                  <div className="project-top-row">
+            <Reveal key={project.name} delay={0.06} className="anime-project-row">
+              <article className="anime-project-card" id={`project-${project.demoKey}`}>
+                {/* Left Column: Technical Narrative & How It Works */}
+                <div className="anime-project-details">
+                  <div className="anime-project-top-row">
                     <span className="project-cat-badge">{project.category}</span>
                     <span className="project-status-pill">
                       <span className="project-status-dot" />
@@ -551,38 +554,77 @@ export default function Portfolio() {
                     </span>
                   </div>
 
-                  <h3 className="project-card-title">
+                  <h3 className="anime-project-title">
+                    <span className="anime-project-num">{project.number}</span>
                     <span>{project.name}</span>
+                  </h3>
+
+                  <p className="anime-project-tagline">{project.tagline}</p>
+                  <p className="project-card-desc">{project.description}</p>
+
+                  {/* Core Purpose / Function */}
+                  <div className="anime-purpose-box">
+                    <span className="anime-section-label">PRIMARY FUNCTION:</span>
+                    <p className="anime-purpose-text">{project.purpose}</p>
+                  </div>
+
+                  {/* How it Works / Technical Workflow */}
+                  <div className="anime-how-box">
+                    <span className="anime-section-label">HOW IT WORKS:</span>
+                    <ul className="anime-workflow-list">
+                      {project.howItWorks.map((step, sIdx) => (
+                        <li key={sIdx} className="anime-workflow-item">
+                          <CheckCircle2 size={13} className="anime-check-icon" />
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Telemetry Metrics */}
+                  <div className="anime-metrics-grid">
+                    {project.metrics.map((m, mIdx) => (
+                      <div key={mIdx} className="anime-metric-card">
+                        <span className="anime-metric-val">{m.value}</span>
+                        <span className="anime-metric-label">{m.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Footer Stack & Link */}
+                  <div className="project-card-footer">
+                    <div className="tech-pills">
+                      {project.stack.map((item) => (
+                        <span key={item} className="tech-pill">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
                     <a
                       href={project.href}
                       target="_blank"
                       rel="noreferrer"
-                      aria-label={`View ${project.name} on GitHub`}
+                      className="project-action-link"
                     >
-                      <ArrowUpRight size={22} className="project-title-arrow" />
+                      <Github size={14} /> View Repository
                     </a>
-                  </h3>
-
-                  <p className="project-card-desc">{project.description}</p>
+                  </div>
                 </div>
 
-                <div className="project-card-footer">
-                  <div className="tech-pills">
-                    {project.stack.map((item) => (
-                      <span key={item} className="tech-pill">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
+                {/* Right Column: Anime.js Style Interactive Motion Visualizer */}
+                <div className="anime-project-visual">
+                  <div className="anime-visual-frame">
+                    <div className="anime-visual-topbar">
+                      <div className="anime-visual-tag">
+                        <Sparkles size={11} />
+                        <span>KINETIC INTERACTIVE DEMO // {project.name.toUpperCase()}</span>
+                      </div>
+                      <span className="anime-visual-fps">60 FPS</span>
+                    </div>
 
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-action-link"
-                  >
-                    <Github size={14} /> View Repository
-                  </a>
+                    <ProjectMotionDemo demoKey={project.demoKey} />
+                  </div>
                 </div>
               </article>
             </Reveal>
