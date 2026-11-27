@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll } from "framer-motion";
 import {
   ArrowDown, ArrowUpRight, Bot, Check, CheckCircle2, Code2, Copy, Cpu,
   ExternalLink, Github, Layers3, Menu, Sparkles, Terminal,
@@ -73,9 +73,6 @@ export default function Portfolio() {
   const { scrollYProgress } = useScroll();
   const [activeSection, setActiveSection] = useState("00 // HERO");
   const [scrollPct, setScrollPct] = useState(0);
-
-  const heroParallax = useTransform(scrollYProgress, [0, 0.22], [0, 60]);
-  const backdropParallax = useTransform(scrollYProgress, [0, 0.22], [0, -35]);
 
   useEffect(() => {
     return scrollYProgress.on("change", (latest) => {
@@ -169,8 +166,16 @@ export default function Portfolio() {
         style={{ scaleX: scrollYProgress }}
       />
 
-      {/* Floating Scroll Telemetry HUD */}
-      <div className="floating-scroll-hud" aria-hidden="true">
+      {/* Floating Scroll Telemetry HUD (fades in only when scrolling past hero) */}
+      <div
+        className="floating-scroll-hud"
+        aria-hidden="true"
+        style={{
+          opacity: scrollPct > 2 ? 1 : 0,
+          pointerEvents: "none",
+          transition: "opacity 0.3s ease"
+        }}
+      >
         <span className="scroll-hud-dot" />
         <span className="scroll-hud-section">{activeSection}</span>
         <span className="scroll-hud-pct">{scrollPct}%</span>
@@ -365,23 +370,16 @@ export default function Portfolio() {
         <div className="hero-particles" aria-hidden="true" />
         <div className="hero-radial-glow" aria-hidden="true" />
 
-        {/* Giant Glowing Typography Behind Subject with Optical Parallax */}
-        <motion.div
-          className="hero-backdrop-text-wrap"
-          aria-hidden="true"
-          style={{ y: backdropParallax }}
-        >
+        {/* Giant Glowing Typography Behind Subject */}
+        <div className="hero-backdrop-text-wrap" aria-hidden="true">
           <h1 className="hero-giant-word">PORTFOLIO</h1>
           <div className="hero-tech-banner">
             <span>Tech Stack: Next.js, React, TypeScript, Rust, Tailwind CSS, AI Agents</span>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Master Center Subject Portrait (Transparent Cutout) with Smooth Scroll Parallax */}
-        <motion.div
-          className="hero-subject-container"
-          style={{ y: heroParallax }}
-        >
+        {/* Master Center Subject Portrait (Transparent Cutout) */}
+        <div className="hero-subject-container">
           {!portraitFailed ? (
             <picture>
               <source srcSet="/images/portfolio-portrait-hero-transparent.webp" type="image/webp" />
@@ -404,7 +402,7 @@ export default function Portfolio() {
               height={540}
             />
           )}
-        </motion.div>
+        </div>
 
         {/* Bottom Left Corner Content */}
         <div className="hero-corner-left">
