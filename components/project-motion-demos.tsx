@@ -11,7 +11,7 @@ import {
 // ============================================================================
 // 01. AEGIS DESKTOP: RUST SYSTEMS & CAPABILITY-BASED IPC SANDBOX VISUALIZER
 // ============================================================================
-export function AegisIpcDemo() {
+export function AegisIpcDemo({ activeStep = 0 }: { activeStep?: number }) {
   const [packets, setPackets] = useState<number[]>([1, 2]);
   const [activeCap, setActiveCap] = useState("crypto.sign");
   const [simulatedAttack, setSimulatedAttack] = useState(false);
@@ -22,6 +22,16 @@ export function AegisIpcDemo() {
     setIpcLatency((0.25 + Math.random() * 0.25).toFixed(2) + "ms");
   };
 
+  useEffect(() => {
+    if (activeStep === 1) {
+      const interval = setInterval(() => {
+        setPackets((prev) => [...prev.slice(-4), Date.now()]);
+        setIpcLatency((0.22 + Math.random() * 0.18).toFixed(2) + "ms");
+      }, 800);
+      return () => clearInterval(interval);
+    }
+  }, [activeStep]);
+
   const capabilities = [
     { name: "crypto.sign", status: "ALLOW", delay: "0.2ms" },
     { name: "fs.readSafe", status: "ALLOW", delay: "0.4ms" },
@@ -30,14 +40,14 @@ export function AegisIpcDemo() {
   ];
 
   return (
-    <div className="anime-demo-container aegis-demo">
+    <div className={`anime-demo-container aegis-demo step-mode-${activeStep}`}>
       {/* Top HUD Status */}
       <div className="anime-demo-header">
-        <div className="anime-hud-chip green">
+        <div className={`anime-hud-chip green ${activeStep === 2 ? "active-glow" : ""}`}>
           <ShieldCheck size={13} />
           <span>CAPABILITY ENCLAVE // POST-QUANTUM</span>
         </div>
-        <div className="anime-hud-chip amber">
+        <div className={`anime-hud-chip amber ${activeStep === 1 ? "active-glow" : ""}`}>
           <Zap size={13} />
           <span>IPC: {ipcLatency}</span>
         </div>
@@ -46,15 +56,16 @@ export function AegisIpcDemo() {
       {/* IPC Sandbox Pipeline Visualization */}
       <div className="aegis-pipeline">
         {/* Node 1: Rust Core */}
-        <div className="aegis-node rust-node">
+        <div className={`aegis-node rust-node ${activeStep === 0 ? "active-highlight" : ""}`}>
           <div className="aegis-node-ring" />
           <Cpu size={22} className="aegis-icon" />
           <span className="aegis-node-title">Rust Core</span>
           <span className="aegis-node-sub">Ring 0 • Memory Safe</span>
+          {activeStep === 0 && <span className="kinetic-node-tag">ACTIVE FOCUS</span>}
         </div>
 
         {/* Center: Encrypted IPC Bridge with animated flying packets */}
-        <div className="aegis-bridge">
+        <div className={`aegis-bridge ${activeStep === 1 ? "active-highlight" : ""}`}>
           <div className="aegis-bridge-wire" />
           <div className="aegis-bridge-wire-pulse" />
 
@@ -64,7 +75,7 @@ export function AegisIpcDemo() {
             className="aegis-packet"
             initial={{ left: "10%", opacity: 0 }}
             animate={{ left: "85%", opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            transition={{ duration: activeStep === 1 ? 0.8 : 1.2, ease: "easeInOut" }}
           >
             <Lock size={10} />
           </motion.div>
@@ -75,7 +86,7 @@ export function AegisIpcDemo() {
         </div>
 
         {/* Node 2: React Web Frontend */}
-        <div className="aegis-node web-node">
+        <div className={`aegis-node web-node ${activeStep === 1 ? "active-highlight" : ""}`}>
           <div className="aegis-node-ring web" />
           <Laptop size={22} className="aegis-icon web" />
           <span className="aegis-node-title">Web Viewport</span>
@@ -84,7 +95,7 @@ export function AegisIpcDemo() {
       </div>
 
       {/* Capability Permission Inspector */}
-      <div className="aegis-caps-list">
+      <div className={`aegis-caps-list ${activeStep === 2 ? "active-highlight" : ""}`}>
         <div className="aegis-caps-title">
           <span>CAPABILITY ACCESS CONTROL LIST:</span>
           <button onClick={triggerIpc} className="anime-interactive-btn">
@@ -115,9 +126,16 @@ export function AegisIpcDemo() {
 // ============================================================================
 // 02. TOONFORGE AI STUDIO: AI STORYBOARDING & VISUAL IDENTITY CONTINUITY
 // ============================================================================
-export function ToonForgeStoryDemo() {
+export function ToonForgeStoryDemo({ activeStep }: { activeStep?: number }) {
   const [activeFrame, setActiveFrame] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    if (activeStep !== undefined) {
+      setActiveFrame(Math.min(activeStep, 3));
+      setIsPlaying(false);
+    }
+  }, [activeStep]);
 
   const frames = [
     {
@@ -260,9 +278,15 @@ export function ToonForgeStoryDemo() {
 // ============================================================================
 // 03. SARA NOTE: COZY OFFLINE-FIRST DESKTOP NOTEBOOK & LOCAL DATA ENGINE
 // ============================================================================
-export function SaraNoteDemo() {
+export function SaraNoteDemo({ activeStep = 0 }: { activeStep?: number }) {
   const [selectedFolder, setSelectedFolder] = useState("Architecture");
   const [typedChars, setTypedChars] = useState(0);
+
+  useEffect(() => {
+    if (activeStep === 0) setSelectedFolder("Architecture");
+    if (activeStep === 1) setSelectedFolder("AI Agents");
+    if (activeStep === 2) setSelectedFolder("Drafts");
+  }, [activeStep]);
 
   const noteSnippet = `# Systems Engineering Notebook\n> 100% On-Device • Zero Cloud Dependency\n\n- [x] SQLite ACID storage (instant reads)\n- [x] Atomic JSON snapshot rollbacks\n- [x] Zero network telemetry or cloud lag`;
 
@@ -274,7 +298,7 @@ export function SaraNoteDemo() {
   }, [noteSnippet.length]);
 
   return (
-    <div className="anime-demo-container saranote-demo">
+    <div className={`anime-demo-container saranote-demo step-mode-${activeStep}`}>
       {/* Desktop App Window Header */}
       <div className="desktop-window-header">
         <div className="window-dots">
@@ -335,10 +359,20 @@ export function SaraNoteDemo() {
 // ============================================================================
 // 04. SARA PDF READER: 120 FPS FLUTTER DOCUMENT RENDERING ENGINE
 // ============================================================================
-export function SaraPdfDemo() {
+export function SaraPdfDemo({ activeStep = 0 }: { activeStep?: number }) {
   const [currentPage, setCurrentPage] = useState(42);
   const [format, setFormat] = useState<"PDF" | "EPUB" | "DOCX">("PDF");
   const [isFlipping, setIsFlipping] = useState(false);
+
+  useEffect(() => {
+    if (activeStep === 0) setFormat("PDF");
+    if (activeStep === 1) setFormat("EPUB");
+    if (activeStep === 2) {
+      setIsFlipping(true);
+      setCurrentPage((p) => (p >= 248 ? 1 : p + 1));
+      setTimeout(() => setIsFlipping(false), 350);
+    }
+  }, [activeStep]);
 
   const flipPage = () => {
     setIsFlipping(true);
@@ -347,7 +381,7 @@ export function SaraPdfDemo() {
   };
 
   return (
-    <div className="anime-demo-container sarapdf-demo">
+    <div className={`anime-demo-container sarapdf-demo step-mode-${activeStep}`}>
       {/* Top Format Selector Header */}
       <div className="anime-demo-header">
         <div className="pdf-format-tabs">
@@ -416,17 +450,21 @@ export function SaraPdfDemo() {
 // ============================================================================
 // 05. DONI UI: KINETIC COMPONENT LIBRARY & SPRING PHYSICS PLAYGROUND
 // ============================================================================
-export function DoniUiSpringDemo() {
+export function DoniUiSpringDemo({ activeStep = 0 }: { activeStep?: number }) {
   const [springStrength, setSpringStrength] = useState(1);
   const [activeToggle, setActiveToggle] = useState(true);
   const [pulseCount, setPulseCount] = useState(0);
+
+  useEffect(() => {
+    setPulseCount((c) => c + 1);
+  }, [activeStep]);
 
   const kickSpring = () => {
     setPulseCount((c) => c + 1);
   };
 
   return (
-    <div className="anime-demo-container doniui-demo">
+    <div className={`anime-demo-container doniui-demo step-mode-${activeStep}`}>
       {/* Top Header */}
       <div className="anime-demo-header">
         <div className="anime-hud-chip amber">
@@ -494,21 +532,27 @@ export function DoniUiSpringDemo() {
 }
 
 // ============================================================================
-// MAIN WRAPPER: PICKS THE RIGHT DEMO ACCORDING TO DEMO KEY
+// MAIN WRAPPER: PICKS THE RIGHT DEMO ACCORDING TO DEMO KEY & ACTIVE STEP
 // ============================================================================
-export function ProjectMotionDemo({ demoKey }: { demoKey: string }) {
+export function ProjectMotionDemo({
+  demoKey,
+  activeStep = 0
+}: {
+  demoKey: string;
+  activeStep?: number;
+}) {
   switch (demoKey) {
     case "aegis":
-      return <AegisIpcDemo />;
+      return <AegisIpcDemo activeStep={activeStep} />;
     case "toonforge":
-      return <ToonForgeStoryDemo />;
+      return <ToonForgeStoryDemo activeStep={activeStep} />;
     case "saranote":
-      return <SaraNoteDemo />;
+      return <SaraNoteDemo activeStep={activeStep} />;
     case "sarapdf":
-      return <SaraPdfDemo />;
+      return <SaraPdfDemo activeStep={activeStep} />;
     case "doniui":
-      return <DoniUiSpringDemo />;
+      return <DoniUiSpringDemo activeStep={activeStep} />;
     default:
-      return <AegisIpcDemo />;
+      return <AegisIpcDemo activeStep={activeStep} />;
   }
 }

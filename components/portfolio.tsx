@@ -11,6 +11,7 @@ import { projects } from "@/data/projects";
 import { HumanEvolution } from "@/components/human-evolution";
 import { MotionGraphicCard } from "@/components/motion-graphic-card";
 import { ProjectMotionDemo } from "@/components/project-motion-demos";
+import { KineticProjectCard } from "@/components/kinetic-project-card";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { ClientShowcase } from "@/components/client-showcase";
 
@@ -606,95 +607,14 @@ export default function Portfolio() {
           </Reveal>
         </div>
 
-        {/* Anime.js-Inspired Kinetic Projects Showcase */}
+        {/* Kinetic Projects Showcase: Scroll-Driven Drop-in Explanations & Synchronized Motion Graphics */}
         <div className="anime-projects-stack">
           {projects.map((project, index) => (
-            <Reveal key={project.name} delay={0.06} className="anime-project-row">
-              <article className="anime-project-card" id={`project-${project.demoKey}`}>
-                {/* Left Column: Technical Narrative & How It Works */}
-                <div className="anime-project-details">
-                  <div className="anime-project-top-row">
-                    <span className="project-cat-badge">{project.category}</span>
-                    <span className="project-status-pill">
-                      <span className="project-status-dot" />
-                      {project.status}
-                    </span>
-                  </div>
-
-                  <h3 className="anime-project-title">
-                    <span className="anime-project-num">{project.number}</span>
-                    <span>{project.name}</span>
-                  </h3>
-
-                  <p className="anime-project-tagline">{project.tagline}</p>
-                  <p className="project-card-desc">{project.description}</p>
-
-                  {/* Core Purpose / Function */}
-                  <div className="anime-purpose-box">
-                    <span className="anime-section-label">PRIMARY FUNCTION:</span>
-                    <p className="anime-purpose-text">{project.purpose}</p>
-                  </div>
-
-                  {/* How it Works / Technical Workflow */}
-                  <div className="anime-how-box">
-                    <span className="anime-section-label">HOW IT WORKS:</span>
-                    <ul className="anime-workflow-list">
-                      {project.howItWorks.map((step, sIdx) => (
-                        <li key={sIdx} className="anime-workflow-item">
-                          <CheckCircle2 size={13} className="anime-check-icon" />
-                          <span>{step}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Telemetry Metrics */}
-                  <div className="anime-metrics-grid">
-                    {project.metrics.map((m, mIdx) => (
-                      <div key={mIdx} className="anime-metric-card">
-                        <span className="anime-metric-val">{m.value}</span>
-                        <span className="anime-metric-label">{m.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Footer Stack & Link */}
-                  <div className="project-card-footer">
-                    <div className="tech-pills">
-                      {project.stack.map((item) => (
-                        <span key={item} className="tech-pill">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="project-action-link"
-                    >
-                      <Github size={14} /> View Repository
-                    </a>
-                  </div>
-                </div>
-
-                {/* Right Column: Anime.js Style Interactive Motion Visualizer */}
-                <div className="anime-project-visual">
-                  <div className="anime-visual-frame">
-                    <div className="anime-visual-topbar">
-                      <div className="anime-visual-tag">
-                        <Sparkles size={11} />
-                        <span>KINETIC INTERACTIVE DEMO // {project.name.toUpperCase()}</span>
-                      </div>
-                      <span className="anime-visual-fps">60 FPS</span>
-                    </div>
-
-                    <ProjectMotionDemo demoKey={project.demoKey} />
-                  </div>
-                </div>
-              </article>
-            </Reveal>
+            <KineticProjectCard
+              key={project.name}
+              project={project}
+              index={index}
+            />
           ))}
         </div>
 

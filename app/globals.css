@@ -1377,6 +1377,406 @@ button:focus-visible {
   text-transform: uppercase;
 }
 
+/* ============================================================================
+   KINETIC SYNCHRONIZED SCROLL SHOWCASE ("watenna oni" drop-in & step-sync)
+   ============================================================================ */
+.kinetic-card-interactive {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kinetic-card-ambient-glow {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0.25;
+  filter: blur(40px);
+}
+
+.kinetic-status-cluster {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kinetic-sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  background: rgba(214, 173, 122, 0.08);
+  border: 1px solid var(--line-amber);
+  border-radius: 9999px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.kinetic-pulse-icon {
+  color: var(--accent);
+  animation: preloaderPulse 1.2s infinite alternate;
+}
+
+.kinetic-purpose-box {
+  position: relative;
+  overflow: hidden;
+  background: rgba(214, 173, 122, 0.05);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+}
+
+.kinetic-purpose-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.kinetic-live-indicator {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  background: rgba(214, 173, 122, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.kinetic-scanner-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: purposeScan 3.5s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+@keyframes purposeScan {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.kinetic-how-box {
+  background: rgba(10, 10, 9, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+}
+
+.kinetic-how-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.kinetic-step-hint {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.kinetic-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kinetic-step-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(18, 18, 16, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kinetic-step-card:hover {
+  background: rgba(26, 26, 22, 0.7);
+  border-color: rgba(214, 173, 122, 0.3);
+  transform: translateX(4px);
+}
+
+.kinetic-step-card.active-step {
+  background: rgba(214, 173, 122, 0.09);
+  border: 1px solid var(--line-amber);
+  border-left: 3px solid var(--accent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 16px var(--accent-glow);
+  transform: translateX(6px);
+}
+
+.kinetic-step-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.kinetic-step-index {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.kinetic-step-card.active-step .kinetic-step-index {
+  color: var(--accent);
+  background: rgba(214, 173, 122, 0.2);
+  border: 1px solid var(--accent);
+}
+
+.kinetic-step-active-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: preloaderPulse 1.2s infinite alternate;
+}
+
+.kinetic-step-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.kinetic-step-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.kinetic-step-title {
+  font-family: var(--heading);
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.kinetic-step-card.active-step .kinetic-step-title {
+  color: var(--accent);
+}
+
+.kinetic-active-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(214, 173, 122, 0.16);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.kinetic-step-body {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.kinetic-step-card.active-step .kinetic-step-body {
+  color: #f1ede4;
+}
+
+.kinetic-step-progress-rail {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Kinetic Visual Topbar & Controls */
+.kinetic-visual-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(14, 14, 12, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kinetic-stage-pills {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.kinetic-stage-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kinetic-stage-pill:hover {
+  background: rgba(214, 173, 122, 0.12);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.kinetic-stage-pill.active {
+  background: rgba(214, 173, 122, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.stage-pill-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.kinetic-play-toggle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.kinetic-play-toggle:hover {
+  background: var(--accent);
+  color: #0c0c0c;
+}
+
+/* Stage Banner inside Demo Frame */
+.kinetic-stage-banner {
+  padding: 8px 16px;
+  background: rgba(20, 20, 18, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9px;
+}
+
+.kinetic-stage-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+.stage-banner-icon {
+  color: var(--accent);
+}
+
+.stage-banner-name {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.kinetic-stage-sync-tag {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(214, 173, 122, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--line-amber);
+}
+
+/* Active Highlight Classes on Demos */
+.aegis-node.active-highlight {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 24px var(--accent-glow) !important;
+  transform: scale(1.04);
+}
+
+.aegis-node.active-highlight .aegis-node-ring {
+  border-color: var(--accent) !important;
+  animation: preloaderPulse 1s infinite alternate;
+}
+
+.kinetic-node-tag {
+  position: absolute;
+  top: -8px;
+  background: var(--accent);
+  color: #070707;
+  font-family: var(--mono);
+  font-size: 7.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.08em;
+}
+
+.aegis-bridge.active-highlight .aegis-bridge-wire-pulse {
+  opacity: 1 !important;
+  animation-duration: 0.6s !important;
+}
+
+.aegis-bridge.active-highlight .aegis-bridge-badge {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 14px var(--accent-glow) !important;
+  color: var(--accent) !important;
+}
+
+.aegis-caps-list.active-highlight {
+  border-color: var(--line-amber) !important;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.anime-hud-chip.active-glow {
+  box-shadow: 0 0 14px currentColor;
+  transform: scale(1.05);
+}
+
 /* Right Column: Visual Frame */
 .anime-project-visual {
   display: flex;
