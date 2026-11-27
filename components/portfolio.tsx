@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowDown, ArrowUpRight, Bot, Check, CheckCircle2, Code2, Copy, Cpu,
   ExternalLink, Github, Layers3, Menu, Sparkles, Terminal,
@@ -11,6 +11,8 @@ import { projects } from "@/data/projects";
 import { HumanEvolution } from "@/components/human-evolution";
 import { MotionGraphicCard } from "@/components/motion-graphic-card";
 import { ProjectMotionDemo } from "@/components/project-motion-demos";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { ClientShowcase } from "@/components/client-showcase";
 
 const tools = [
   { name: "OpenAI Codex", type: "AI coding agent & synthesis", symbol: "✳", status: "Active" },
@@ -68,6 +70,47 @@ export default function Portfolio() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
 
+  const { scrollYProgress } = useScroll();
+  const [activeSection, setActiveSection] = useState("00 // HERO");
+  const [scrollPct, setScrollPct] = useState(0);
+
+  const heroParallax = useTransform(scrollYProgress, [0, 0.22], [0, 60]);
+  const backdropParallax = useTransform(scrollYProgress, [0, 0.22], [0, -35]);
+
+  useEffect(() => {
+    return scrollYProgress.on("change", (latest) => {
+      setScrollPct(Math.round(latest * 100));
+    });
+  }, [scrollYProgress]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 350;
+      const contactEl = document.getElementById("contact");
+      const toolkitEl = document.getElementById("toolkit");
+      const aboutEl = document.getElementById("about");
+      const projectsEl = document.getElementById("projects");
+      const capEl = document.getElementById("capabilities");
+
+      if (contactEl && scrollPos >= contactEl.offsetTop) {
+        setActiveSection("05 // COMMISSIONS");
+      } else if (toolkitEl && scrollPos >= toolkitEl.offsetTop) {
+        setActiveSection("04 // TOOLKIT");
+      } else if (aboutEl && scrollPos >= aboutEl.offsetTop) {
+        setActiveSection("03 // THE BUILDER");
+      } else if (projectsEl && scrollPos >= projectsEl.offsetTop) {
+        setActiveSection("02 // PROJECTS");
+      } else if (capEl && scrollPos >= capEl.offsetTop) {
+        setActiveSection("01 // CAPABILITIES");
+      } else {
+        setActiveSection("00 // HERO");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     let currentPct = 0;
     const timer = setInterval(() => {
@@ -120,6 +163,19 @@ export default function Portfolio() {
 
   return (
     <main>
+      {/* Top Laser Scroll Progress Bar */}
+      <motion.div
+        className="top-laser-scroll-bar"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      {/* Floating Scroll Telemetry HUD */}
+      <div className="floating-scroll-hud" aria-hidden="true">
+        <span className="scroll-hud-dot" />
+        <span className="scroll-hud-section">{activeSection}</span>
+        <span className="scroll-hud-pct">{scrollPct}%</span>
+      </div>
+
       {/* Cinematic Motion Graphics Preloader */}
       <AnimatePresence>
         {loading && (
@@ -259,6 +315,9 @@ export default function Portfolio() {
             ))}
           </div>
 
+          {/* Luxury Color Theme Switcher */}
+          <ThemeSwitcher />
+
           <a href="#contact" className="nav-cta">
             Contact
           </a>
@@ -292,6 +351,9 @@ export default function Portfolio() {
             <span>Contact</span>
             <ArrowUpRight size={15} />
           </a>
+          <div style={{ padding: "12px 0", display: "flex", justifyContent: "center" }}>
+            <ThemeSwitcher />
+          </div>
         </motion.div>
       )}
 
@@ -303,16 +365,23 @@ export default function Portfolio() {
         <div className="hero-particles" aria-hidden="true" />
         <div className="hero-radial-glow" aria-hidden="true" />
 
-        {/* Giant Glowing Typography Behind Subject */}
-        <div className="hero-backdrop-text-wrap" aria-hidden="true">
+        {/* Giant Glowing Typography Behind Subject with Optical Parallax */}
+        <motion.div
+          className="hero-backdrop-text-wrap"
+          aria-hidden="true"
+          style={{ y: backdropParallax }}
+        >
           <h1 className="hero-giant-word">PORTFOLIO</h1>
           <div className="hero-tech-banner">
             <span>Tech Stack: Next.js, React, TypeScript, Rust, Tailwind CSS, AI Agents</span>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Master Center Subject Portrait (Transparent Cutout) */}
-        <div className="hero-subject-container">
+        {/* Master Center Subject Portrait (Transparent Cutout) with Smooth Scroll Parallax */}
+        <motion.div
+          className="hero-subject-container"
+          style={{ y: heroParallax }}
+        >
           {!portraitFailed ? (
             <picture>
               <source srcSet="/images/portfolio-portrait-hero-transparent.webp" type="image/webp" />
@@ -335,7 +404,7 @@ export default function Portfolio() {
               height={540}
             />
           )}
-        </div>
+        </motion.div>
 
         {/* Bottom Left Corner Content */}
         <div className="hero-corner-left">
@@ -778,43 +847,11 @@ export default function Portfolio() {
         </Reveal>
       </section>
 
-      {/* Contact Section */}
-      <section className="section-shell contact-section" id="contact">
-        <Reveal>
-          <div className="contact-card-cinematic">
-            <span className="section-kicker">05 / GET IN TOUCH</span>
-            <h2 className="contact-big-title">
-              Let&apos;s build something<br />
-              <span className="contact-outline-word">exceptional.</span>
-            </h2>
-            <p className="contact-desc">
-              Have an ambitious vision, a challenging technical problem, or an agent automation concept?
-              Let&apos;s connect and make it a reality.
-            </p>
-
-            <div className="contact-action-row">
-              <button
-                type="button"
-                onClick={handleCopyEmail}
-                className="btn-copy-email"
-                aria-label="Copy email address"
-              >
-                {copiedEmail ? <Check size={16} /> : <Copy size={16} />}
-                {copiedEmail ? "Email copied to clipboard!" : "contact@malsanka.com"}
-              </button>
-
-              <a
-                href="https://github.com/charitha-only"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-secondary"
-              >
-                <Github size={16} /> Connect on GitHub
-              </a>
-            </div>
-          </div>
-        </Reveal>
-      </section>
+      {/* Signature Client Commissions & Side-Slide Showcase */}
+      <ClientShowcase
+        onCopyEmail={handleCopyEmail}
+        copiedEmail={copiedEmail}
+      />
 
       {/* Footer */}
       <footer className="site-footer">
